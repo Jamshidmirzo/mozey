@@ -57,3 +57,4 @@ infra/minio-data/
 # Temp
 tmp/
 temp/
+.vercel
