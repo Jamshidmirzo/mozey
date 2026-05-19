@@ -7,7 +7,7 @@ import {
 } from './auth';
 import type { RefreshResponse } from './types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://157.230.225.147:3000/api/v1';
 
 let isRefreshing = false;
 let refreshSubscribers: Array<(token: string) => void> = [];
