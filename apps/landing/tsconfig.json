@@ -18,9 +18,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "@mozey/ui": ["../../packages/ui/src"],
-      "@mozey/ui/*": ["../../packages/ui/src/*"]
+      "@/*": ["./*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

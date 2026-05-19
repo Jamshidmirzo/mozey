@@ -4,7 +4,6 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@mozey/ui'],
   images: {
     unoptimized: true,
   },
