@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 560" fill="none">
+  <!-- Phone frame -->
+  <rect width="280" height="560" rx="32" fill="#1B365D"/>
+  <rect x="4" y="4" width="272" height="552" rx="28" fill="#FFFFFF"/>
+  <!-- Status bar -->
+  <rect x="4" y="4" width="272" height="44" rx="28" fill="#1B365D"/>
+  <text x="140" y="30" text-anchor="middle" fill="white" font-family="system-ui" font-size="13">9:41</text>
+  <!-- Museum detail image area -->
+  <rect x="4" y="48" width="272" height="200" fill="#E8ECF2"/>
+  <path d="M100 140L140 110L180 140L140 170Z" fill="#D4A853" fill-opacity="0.3"/>
+  <circle cx="140" cy="140" r="30" fill="#D4A853" fill-opacity="0.15" stroke="#D4A853" stroke-width="1"/>
+  <!-- Back button -->
+  <circle cx="28" cy="72" r="16" fill="white" fill-opacity="0.9"/>
+  <path d="M32 72L24 72M24 72L28 68M24 72L28 76" stroke="#1B365D" stroke-width="2" stroke-linecap="round"/>
+  <!-- Like button -->
+  <circle cx="252" cy="72" r="16" fill="white" fill-opacity="0.9"/>
+  <path d="M248 69C246 66 242 66 241 69C240 72 248 78 248 78C248 78 256 72 255 69C254 66 250 66 248 69Z" fill="#E07A5F"/>
+  <!-- Content area -->
+  <text x="24" y="276" fill="#1B365D" font-family="Georgia, serif" font-size="20" font-weight="700">Amir Temur muzeyi</text>
+  <text x="24" y="298" fill="#888" font-family="system-ui" font-size="13">Toshkent shahri, Amir Temur xiyoboni</text>
+  <!-- Rating / info row -->
+  <rect x="24" y="312" width="60" height="24" rx="12" fill="#D4A853" fill-opacity="0.15"/>
+  <text x="54" y="328" text-anchor="middle" fill="#D4A853" font-family="system-ui" font-size="11" font-weight="600">Bepul</text>
+  <rect x="92" y="312" width="80" height="24" rx="12" fill="#1B365D" fill-opacity="0.08"/>
+  <text x="132" y="328" text-anchor="middle" fill="#1B365D" font-family="system-ui" font-size="11">09:00 - 17:00</text>
+  <!-- Description -->
+  <rect x="24" y="352" width="232" height="8" rx="4" fill="#F0F0F0"/>
+  <rect x="24" y="368" width="200" height="8" rx="4" fill="#F0F0F0"/>
+  <rect x="24" y="384" width="220" height="8" rx="4" fill="#F0F0F0"/>
+  <rect x="24" y="400" width="160" height="8" rx="4" fill="#F0F0F0"/>
+  <!-- Map placeholder -->
+  <rect x="24" y="424" width="232" height="80" rx="12" fill="#E8ECF2"/>
+  <circle cx="140" cy="464" r="8" fill="#E07A5F" fill-opacity="0.8"/>
+  <circle cx="140" cy="464" r="3" fill="white"/>
+</svg>

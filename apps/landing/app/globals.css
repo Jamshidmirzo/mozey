@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --museum-gold: 212 168 83;
+    --deep-blue: 27 54 93;
+    --warm-white: 255 248 240;
+    --cursor-size: 20px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-white text-gray-900;
+    cursor: none;
+  }
+
+  @media (pointer: coarse) {
+    body {
+      cursor: auto;
+    }
+  }
+
+  ::selection {
+    @apply bg-museum-gold/30 text-deep-blue;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply px-4 py-24 sm:px-6 sm:py-32 md:py-40 lg:px-8;
+  }
+
+  .container-landing {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .heading-display {
+    @apply font-display text-5xl font-bold tracking-tight text-deep-blue sm:text-6xl md:text-7xl lg:text-8xl;
+    line-height: 0.95;
+  }
+
+  .heading-section {
+    @apply font-display text-4xl font-bold tracking-tight text-deep-blue sm:text-5xl md:text-6xl;
+    line-height: 1;
+  }
+
+  .heading-sub {
+    @apply font-display text-2xl font-bold tracking-tight text-deep-blue sm:text-3xl md:text-4xl;
+    line-height: 1.1;
+  }
+
+  .text-body {
+    @apply text-lg leading-relaxed text-gray-500 sm:text-xl;
+  }
+
+  .text-body-large {
+    @apply text-xl leading-relaxed text-gray-500 sm:text-2xl;
+  }
+
+  .gold-underline {
+    @apply relative;
+  }
+
+  .gold-underline::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 h-0.5 w-full bg-museum-gold;
+  }
+
+  .glass-card {
+    @apply rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl;
+  }
+
+  .apple-card {
+    @apply rounded-3xl bg-gray-50 p-8 transition-all duration-500 hover:bg-gray-100 sm:p-10;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #D4A853 0%, #E3C76E 50%, #D4A853 100%);
+  }
+
+  .text-gradient-blue {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #1B365D 0%, #496E93 100%);
+  }
+}

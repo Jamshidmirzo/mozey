@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "Mozey — All Museums in One App",
+    "description": "Discover 281 museums and 101 historical places across Uzbekistan. Offline mode, 3 languages, dark mode, and much more."
+  },
+  "nav": {
+    "features": "Features",
+    "screenshots": "Screenshots",
+    "statistics": "Statistics",
+    "download": "Download"
+  },
+  "hero": {
+    "badge": "Free App",
+    "title": "Mozey",
+    "subtitle": "Discover the Heritage of the Great Silk Road",
+    "description": "Explore 281 museums and 101 historical places across Uzbekistan in one app. Works offline, available in 3 languages.",
+    "downloadIos": "Download on App Store",
+    "downloadAndroid": "Get it on Google Play"
+  },
+  "features": {
+    "sectionLabel": "Features",
+    "title": "Why Our App?",
+    "subtitle": "All the tools you need to explore the cultural heritage of Uzbekistan",
+    "offline": {
+      "title": "Offline Mode",
+      "description": "Works without an internet connection. Access information about all museums even in airplane mode."
+    },
+    "languages": {
+      "title": "3 Languages",
+      "description": "Complete information in Uzbek, Russian, and English. Switch languages with a single tap."
+    },
+    "museums": {
+      "title": "281+ Museums",
+      "description": "A complete database of museums across all 14 regions of Uzbekistan."
+    },
+    "darkMode": {
+      "title": "Dark Mode",
+      "description": "Eye-friendly dark theme. Easily switch between day and night modes."
+    },
+    "search": {
+      "title": "Quick Search",
+      "description": "Instantly find museums by name, city, or region."
+    },
+    "favorites": {
+      "title": "Favorites",
+      "description": "Save your favorite museums and quickly find them later."
+    }
+  },
+  "screenshots": {
+    "sectionLabel": "App Preview",
+    "title": "See Inside the App",
+    "subtitle": "Modern design with an intuitive interface"
+  },
+  "statistics": {
+    "sectionLabel": "By the Numbers",
+    "title": "Cultural Heritage of Uzbekistan",
+    "subtitle": "Discover one of the richest cultural heritages in the world",
+    "museums": "Museums",
+    "historicalPlaces": "Historical Places",
+    "languages": "Languages",
+    "regions": "Regions"
+  },
+  "download": {
+    "sectionLabel": "Download",
+    "title": "Download Now",
+    "subtitle": "Carry the museums of Uzbekistan in your pocket. Free for iOS and Android.",
+    "qrHint": "Scan the QR code or tap a button",
+    "downloadIos": "App Store",
+    "downloadAndroid": "Google Play"
+  },
+  "footer": {
+    "description": "The best app for exploring the museums of Uzbekistan. Built by Mozey.",
+    "navigation": "Navigation",
+    "legal": "Legal",
+    "social": "Social Media",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "copyright": "Mozey. All rights reserved."
+  }
+}

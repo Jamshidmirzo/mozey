@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "Mozey — Barcha muzeylar bitta ilovada",
+    "description": "O'zbekiston bo'ylab 281 ta muzey va 101 ta tarixiy joyni kashf eting. Oflayn rejim, 3 til, qorong'i rejim va boshqa ko'plab imkoniyatlar."
+  },
+  "nav": {
+    "features": "Imkoniyatlar",
+    "screenshots": "Skrinshotlar",
+    "statistics": "Statistika",
+    "download": "Yuklab olish"
+  },
+  "hero": {
+    "badge": "Bepul ilova",
+    "title": "Mozey",
+    "subtitle": "Buyuk ipak yo'li merosini kashf eting",
+    "description": "O'zbekiston bo'ylab 281 ta muzey va 101 ta tarixiy joyni bitta ilovada o'rganing. Internetsiz ishlaydi, 3 tilda mavjud.",
+    "downloadIos": "App Store'dan yuklab olish",
+    "downloadAndroid": "Google Play'dan yuklab olish"
+  },
+  "features": {
+    "sectionLabel": "Imkoniyatlar",
+    "title": "Nima uchun bizning ilovamiz?",
+    "subtitle": "O'zbekiston madaniy merosini kashf qilish uchun barcha kerakli vositalar",
+    "offline": {
+      "title": "Oflayn rejim",
+      "description": "Internet aloqasisiz ishlaydi. Samolyot rejimida ham barcha muzeylar haqida ma'lumot oling."
+    },
+    "languages": {
+      "title": "3 tilda mavjud",
+      "description": "O'zbek, rus va ingliz tillarida to'liq ma'lumot. Til almashtirish bir bosish bilan."
+    },
+    "museums": {
+      "title": "281+ muzey",
+      "description": "O'zbekistonning barcha 14 viloyati bo'ylab muzeylarning to'liq ma'lumotlar bazasi."
+    },
+    "darkMode": {
+      "title": "Qorong'i rejim",
+      "description": "Ko'zni charchatmaydigan qorong'i tema. Kun va tun rejimi o'rtasida osongina almashtiring."
+    },
+    "search": {
+      "title": "Tezkor qidiruv",
+      "description": "Muzey nomi, shahar yoki viloyat bo'yicha bir zumda toping."
+    },
+    "favorites": {
+      "title": "Sevimlilar",
+      "description": "Sevimli muzeylaringizni saqlang va ularni keyinroq tez toping."
+    }
+  },
+  "screenshots": {
+    "sectionLabel": "Ilova ko'rinishi",
+    "title": "Ilovani ichidan ko'ring",
+    "subtitle": "Zamonaviy dizayn va qulay interfeys"
+  },
+  "statistics": {
+    "sectionLabel": "Raqamlarda",
+    "title": "O'zbekiston madaniy merosi",
+    "subtitle": "Dunyodagi eng boy madaniy meroslardan birini kashf eting",
+    "museums": "Muzeylar",
+    "historicalPlaces": "Tarixiy joylar",
+    "languages": "Til",
+    "regions": "Viloyat"
+  },
+  "download": {
+    "sectionLabel": "Yuklab olish",
+    "title": "Hoziroq yuklab oling",
+    "subtitle": "O'zbekiston muzeylarini cho'ntagingizda olib yuring. Ilova iOS va Android uchun bepul.",
+    "qrHint": "QR kodni skanerlang yoki tugmani bosing",
+    "downloadIos": "App Store",
+    "downloadAndroid": "Google Play"
+  },
+  "footer": {
+    "description": "O'zbekiston muzeylarini kashf qilish uchun eng yaxshi ilova. Mozey tomonidan yaratilgan.",
+    "navigation": "Sahifalar",
+    "legal": "Huquqiy",
+    "social": "Ijtimoiy tarmoqlar",
+    "privacy": "Maxfiylik siyosati",
+    "terms": "Foydalanish shartlari",
+    "copyright": "Mozey. Barcha huquqlar himoyalangan."
+  }
+}

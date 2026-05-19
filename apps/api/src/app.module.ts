@@ -1,0 +1,32 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
+import { AdminAuthModule } from './admin-auth/admin-auth.module';
+import { MuseumsModule } from './museums/museums.module';
+import { HistoricalPlacesModule } from './historical-places/historical-places.module';
+import { SyncModule } from './sync/sync.module';
+import { AdminsModule } from './admins/admins.module';
+import { AuditLogModule } from './audit-log/audit-log.module';
+import { UploadModule } from './upload/upload.module';
+import { HealthController } from './health/health.controller';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env'],
+    }),
+    PrismaModule,
+    AuthModule,
+    AdminAuthModule,
+    MuseumsModule,
+    HistoricalPlacesModule,
+    SyncModule,
+    AdminsModule,
+    AuditLogModule,
+    UploadModule,
+  ],
+  controllers: [HealthController],
+})
+export class AppModule {}

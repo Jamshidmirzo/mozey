@@ -1,0 +1,35 @@
+version: '3.9'
+
+# Development overrides — use with: docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+# Only starts infrastructure services (postgres, redis, minio).
+# API, admin, and landing run locally via npm run dev:* for hot reload.
+
+services:
+  # Disable app containers in dev — run locally instead for hot reload
+  api:
+    profiles:
+      - production
+
+  admin:
+    profiles:
+      - production
+
+  landing:
+    profiles:
+      - production
+
+  # Expose postgres on host for local development
+  postgres:
+    ports:
+      - '5432:5432'
+
+  # Expose redis on host for local development
+  redis:
+    ports:
+      - '6379:6379'
+
+  # Expose MinIO on host for local development
+  minio:
+    ports:
+      - '9000:9000'
+      - '9001:9001'

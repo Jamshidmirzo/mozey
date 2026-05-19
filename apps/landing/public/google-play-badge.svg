@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <rect width="200" height="60" rx="10" fill="#000000"/>
+  <rect x="0.5" y="0.5" width="199" height="59" rx="9.5" stroke="#A6A6A6"/>
+  <!-- Play triangle simplified -->
+  <g transform="translate(16, 12)">
+    <path d="M3 2.5L22 18L3 33.5V2.5Z" fill="url(#play-grad)"/>
+    <path d="M3 2.5L16 15L3 2.5Z" fill="#00C3FF"/>
+    <path d="M3 33.5L16 21L3 33.5Z" fill="#F33E30"/>
+    <path d="M22 18L16 15L16 21L22 18Z" fill="#FFD500"/>
+    <path d="M3 2.5L16 15L16 21L3 33.5" fill="none"/>
+    <defs>
+      <linearGradient id="play-grad" x1="3" y1="2.5" x2="22" y2="18">
+        <stop stop-color="#00C3FF"/>
+        <stop offset="0.5" stop-color="#36E86B"/>
+        <stop offset="1" stop-color="#FFD500"/>
+      </linearGradient>
+    </defs>
+  </g>
+  <!-- Text -->
+  <text x="48" y="22" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="400">GET IT ON</text>
+  <text x="48" y="40" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600">Google Play</text>
+</svg>

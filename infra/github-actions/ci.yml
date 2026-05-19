@@ -1,0 +1,203 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  # ============================================
+  # Lint & Type Check
+  # ============================================
+  lint:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared-types
+        run: npm run build:shared-types || true
+
+      - name: Generate Prisma client
+        run: npx prisma generate --schema=apps/api/prisma/schema.prisma
+
+      - name: Lint API
+        run: npm run lint:api
+
+      - name: Type check Admin
+        run: npm run type-check --workspace=apps/admin
+
+      - name: Type check Landing
+        run: npm run type-check --workspace=apps/landing
+
+  # ============================================
+  # API Tests (unit + e2e)
+  # ============================================
+  test-api:
+    name: API Tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: muzeylari
+          POSTGRES_PASSWORD: muzeylari_secret
+          POSTGRES_DB: muzeylari_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://muzeylari:muzeylari_secret@localhost:5432/muzeylari_test?schema=public
+      REDIS_URL: redis://localhost:6379
+      APP_JWT_SECRET: ci-test-app-jwt-secret-min-32-chars-long
+      APP_JWT_EXPIRES_IN: 365d
+      ADMIN_JWT_SECRET: ci-test-admin-jwt-secret-min-32-chars-long
+      ADMIN_JWT_EXPIRES_IN: 15m
+      ADMIN_JWT_REFRESH_SECRET: ci-test-admin-refresh-secret-min-32-chars
+      ADMIN_JWT_REFRESH_EXPIRES_IN: 7d
+      S3_ENDPOINT: http://localhost:9000
+      S3_REGION: us-east-1
+      S3_ACCESS_KEY: minioadmin
+      S3_SECRET_KEY: minioadmin
+      S3_BUCKET: muzeylari-test
+      S3_PUBLIC_URL: http://localhost:9000/muzeylari-test
+      NODE_ENV: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared-types
+        run: npm run build:shared-types || true
+
+      - name: Generate Prisma client
+        run: npx prisma generate --schema=apps/api/prisma/schema.prisma
+
+      - name: Run database migrations
+        run: npx prisma migrate deploy --schema=apps/api/prisma/schema.prisma
+
+      - name: Run unit tests
+        run: npm run test:api
+
+      - name: Run e2e tests
+        run: npm run test:api:e2e
+
+  # ============================================
+  # Build API
+  # ============================================
+  build-api:
+    name: Build API
+    runs-on: ubuntu-latest
+    needs: [lint, test-api]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared-types
+        run: npm run build:shared-types || true
+
+      - name: Generate Prisma client
+        run: npx prisma generate --schema=apps/api/prisma/schema.prisma
+
+      - name: Build API
+        run: npm run build:api
+
+  # ============================================
+  # Build Admin
+  # ============================================
+  build-admin:
+    name: Build Admin
+    runs-on: ubuntu-latest
+    needs: [lint]
+    env:
+      NEXT_PUBLIC_API_URL: https://api.muzeylari.uz
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared-types
+        run: npm run build:shared-types || true
+
+      - name: Build Admin
+        run: npm run build:admin
+
+  # ============================================
+  # Build Landing
+  # ============================================
+  build-landing:
+    name: Build Landing
+    runs-on: ubuntu-latest
+    needs: [lint]
+    env:
+      NEXT_PUBLIC_SITE_URL: https://muzeylari.uz
+      NEXT_PUBLIC_API_URL: https://api.muzeylari.uz
+      NEXT_PUBLIC_APP_STORE_URL: https://apps.apple.com/app/ozbekiston-muzeylari/id0000000000
+      NEXT_PUBLIC_GOOGLE_PLAY_URL: https://play.google.com/store/apps/details?id=uz.muzeylari.app
+      NEXT_PUBLIC_CONTACT_EMAIL: info@muzeylari.uz
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build shared-types
+        run: npm run build:shared-types || true
+
+      - name: Build Landing
+        run: npm run build:landing

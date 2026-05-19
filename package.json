@@ -1,0 +1,32 @@
+{
+  "name": "mozey-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mozey — managed museum content platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=apps/api",
+    "dev:admin": "npm run dev --workspace=apps/admin",
+    "dev:landing": "npm run dev --workspace=apps/landing",
+    "build:api": "npm run build --workspace=apps/api",
+    "build:admin": "npm run build --workspace=apps/admin",
+    "build:landing": "npm run build --workspace=apps/landing",
+    "build:shared-types": "npm run build --workspace=packages/shared-types",
+    "build:all": "npm run build:shared-types && npm run build:api && npm run build:admin && npm run build:landing",
+    "lint:api": "npm run lint --workspace=apps/api",
+    "test:api": "npm run test --workspace=apps/api",
+    "test:api:e2e": "npm run test:e2e --workspace=apps/api",
+    "db:migrate": "npm run db:migrate --workspace=apps/api",
+    "db:seed": "npm run db:seed --workspace=apps/api",
+    "db:studio": "npm run db:studio --workspace=apps/api",
+    "docker:up": "docker compose -f infra/docker-compose.yml -f infra/docker-compose.dev.yml up -d",
+    "docker:down": "docker compose -f infra/docker-compose.yml -f infra/docker-compose.dev.yml down",
+    "docker:logs": "docker compose -f infra/docker-compose.yml -f infra/docker-compose.dev.yml logs -f"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

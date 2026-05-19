@@ -1,0 +1,12 @@
+{
+  "name": "mozey-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Data import scripts for Ozbekiston Muzeylari platform",
+  "scripts": {
+    "import": "node import-data.js",
+    "upload-photos": "node upload-photos.js",
+    "upload-photos:dry": "DRY_RUN=true node upload-photos.js"
+  }
+}

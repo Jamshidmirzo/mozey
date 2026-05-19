@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://muzeylari.uz/sitemap.xml
