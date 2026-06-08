@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ConfirmDialog } from '@/components/shared/confirm-dialog';
+import { RegionSelect } from '@/components/shared/region-select';
 import { Link } from '@/i18n/navigation';
 import {
   useHistoricalPlaces,
@@ -112,6 +113,19 @@ export function PlaceTable() {
         ),
       },
       {
+        id: 'region',
+        header: t('regions.region'),
+        cell: ({ row }) => {
+          const region = row.original.region;
+          if (!region) return <span className="text-sm text-muted-foreground">-</span>;
+          return (
+            <Badge variant="outline" className="text-xs">
+              {getLocalizedValue(region.name, locale)}
+            </Badge>
+          );
+        },
+      },
+      {
         accessorKey: 'isPublished',
         header: t('common.status'),
         cell: ({ row }) => {
@@ -189,26 +203,41 @@ export function PlaceTable() {
   );
 
   const statusFilter = (
-    <Select
-      value={params.status || 'all'}
-      onValueChange={(value) =>
-        setParams((prev) => ({
-          ...prev,
-          page: 1,
-          status: value as ListParams['status'],
-        }))
-      }
-    >
-      <SelectTrigger className="w-[160px]">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="all">{t('common.all')}</SelectItem>
-        <SelectItem value="published">{t('museums.filterPublished')}</SelectItem>
-        <SelectItem value="draft">{t('museums.filterDraft')}</SelectItem>
-        <SelectItem value="deleted">{t('museums.filterDeleted')}</SelectItem>
-      </SelectContent>
-    </Select>
+    <div className="flex items-center gap-2">
+      <Select
+        value={params.status || 'all'}
+        onValueChange={(value) =>
+          setParams((prev) => ({
+            ...prev,
+            page: 1,
+            status: value as ListParams['status'],
+          }))
+        }
+      >
+        <SelectTrigger className="w-[160px]">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">{t('common.all')}</SelectItem>
+          <SelectItem value="published">{t('museums.filterPublished')}</SelectItem>
+          <SelectItem value="draft">{t('museums.filterDraft')}</SelectItem>
+          <SelectItem value="deleted">{t('museums.filterDeleted')}</SelectItem>
+        </SelectContent>
+      </Select>
+      <div className="w-[200px]">
+        <RegionSelect
+          value={params.regionId || null}
+          onValueChange={(v) =>
+            setParams((prev) => ({
+              ...prev,
+              page: 1,
+              regionId: v || undefined,
+            }))
+          }
+          filterMode
+        />
+      </div>
+    </div>
   );
 
   return (

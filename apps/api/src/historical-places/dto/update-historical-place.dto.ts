@@ -4,6 +4,7 @@ import {
   IsBoolean,
   IsString,
   IsObject,
+  IsUUID,
   ValidateNested,
   Min,
   Max,
@@ -52,6 +53,11 @@ export class UpdateHistoricalPlaceDto {
   @IsOptional()
   @IsString()
   city?: string;
+
+  @ApiPropertyOptional({ description: 'Region UUID (null to unset)', format: 'uuid' })
+  @IsOptional()
+  @IsUUID()
+  regionId?: string | null;
 
   @ApiPropertyOptional({ description: 'Whether the place is published' })
   @IsOptional()

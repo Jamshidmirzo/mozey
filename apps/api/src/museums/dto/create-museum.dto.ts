@@ -5,6 +5,7 @@ import {
   IsBoolean,
   IsString,
   IsObject,
+  IsUUID,
   ValidateNested,
   Min,
   Max,
@@ -86,6 +87,11 @@ export class CreateMuseumDto {
   @IsString()
   @IsNotEmpty()
   city: string;
+
+  @ApiPropertyOptional({ description: 'Region UUID', format: 'uuid' })
+  @IsOptional()
+  @IsUUID()
+  regionId?: string;
 
   @ApiPropertyOptional({ description: 'Whether the museum is published', default: false })
   @IsOptional()

@@ -49,6 +49,7 @@
   },
   "nav": {
     "dashboard": "Boshqaruv paneli",
+    "regions": "Viloyatlar",
     "museums": "Muzeylar",
     "historicalPlaces": "Tarixiy joylar",
     "admins": "Administratorlar",
@@ -62,6 +63,30 @@
     "dark": "Qorong'u",
     "system": "Tizim",
     "language": "Til"
+  },
+  "regions": {
+    "title": "Viloyatlar",
+    "subtitle": "O'zbekiston viloyatlarini boshqarish",
+    "addRegion": "Viloyat qo'shish",
+    "editRegion": "Viloyatni tahrirlash",
+    "createRegion": "Viloyat yaratish",
+    "deleteRegion": "Viloyatni o'chirish",
+    "deleteConfirm": "Bu viloyatni o'chirishni xohlaysizmi? Muzeylar va joylar qoladi, lekin viloyatga bog'lanishi yo'qoladi.",
+    "name": "Nomi",
+    "slug": "Slug (URL)",
+    "slugDescription": "Lotin harflari, kichik harf, raqamlar va chiziqlar. O'zbek nomidan avtomatik hosil bo'ladi.",
+    "orderIdx": "Ko'rsatish tartibi",
+    "orderIdxDescription": "Kichikroq raqam — ro'yxatda yuqoriroq",
+    "museumCount": "Muzeylar",
+    "placeCount": "Joylar",
+    "regionCreated": "Viloyat yaratildi",
+    "regionUpdated": "Viloyat yangilandi",
+    "regionDeleted": "Viloyat o'chirildi",
+    "selectRegion": "Viloyatni tanlang",
+    "noRegion": "Viloyatsiz",
+    "allRegions": "Barcha viloyatlar",
+    "loading": "Yuklanmoqda...",
+    "region": "Viloyat"
   },
   "museums": {
     "title": "Muzeylar",
@@ -79,6 +104,7 @@
     "latitude": "Kenglik",
     "longitude": "Uzunlik",
     "city": "Shahar",
+    "region": "Viloyat",
     "isPublished": "Nashr qilingan",
     "photos": "Rasmlar",
     "managePhotos": "Rasmlarni boshqarish",
@@ -114,6 +140,7 @@
     "isPublished": "Nashr qilingan",
     "photos": "Rasmlar",
     "managePhotos": "Rasmlarni boshqarish",
+    "region": "Viloyat",
     "placeCreated": "Joy muvaffaqiyatli yaratildi",
     "placeUpdated": "Joy muvaffaqiyatli yangilandi",
     "placeDeleted": "Joy o'chirildi",
@@ -144,6 +171,7 @@
     "date": "Sana",
     "museum": "Muzey",
     "historicalPlace": "Tarixiy joy",
+    "region": "Viloyat",
     "create": "Yaratish",
     "update": "Yangilash",
     "deleteAction": "O'chirish",
@@ -164,6 +192,7 @@
     "maxLength": "Ko'pi bilan {max} belgi",
     "number": "Raqam kiriting",
     "latitude": "Kenglik -90 dan 90 gacha bo'lishi kerak",
-    "longitude": "Uzunlik -180 dan 180 gacha bo'lishi kerak"
+    "longitude": "Uzunlik -180 dan 180 gacha bo'lishi kerak",
+    "slugFormat": "Faqat kichik lotin harflari, raqamlar va chiziqlar"
   }
 }

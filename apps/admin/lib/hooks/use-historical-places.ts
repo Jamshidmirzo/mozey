@@ -19,6 +19,7 @@ function buildQueryString(params: ListParams): string {
   if (params.search) searchParams.set('search', params.search);
   if (params.status && params.status !== 'all')
     searchParams.set('status', params.status);
+  if (params.regionId) searchParams.set('regionId', params.regionId);
   const qs = searchParams.toString();
   return qs ? `?${qs}` : '';
 }

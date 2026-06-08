@@ -35,6 +35,10 @@ export class HistoricalPlacesService {
       where.city = { equals: query.city, mode: 'insensitive' };
     }
 
+    if (query.regionId) {
+      where.regionId = query.regionId;
+    }
+
     if (query.search) {
       where.OR = [
         { name: { path: ['uz'], string_contains: query.search } },
@@ -46,7 +50,10 @@ export class HistoricalPlacesService {
     const [items, total] = await Promise.all([
       this.prisma.historicalPlace.findMany({
         where,
-        include: { photos: { orderBy: { orderIdx: 'asc' } } },
+        include: {
+          photos: { orderBy: { orderIdx: 'asc' } },
+          region: { select: { id: true, name: true, slug: true } },
+        },
         orderBy: { createdAt: 'desc' },
         skip: query.skip,
         take: query.limit,
@@ -75,7 +82,10 @@ export class HistoricalPlacesService {
           deletedAt: null,
           isPublished: true,
         },
-        include: { photos: { orderBy: { orderIdx: 'asc' } } },
+        include: {
+          photos: { orderBy: { orderIdx: 'asc' } },
+          region: { select: { id: true, name: true, slug: true } },
+        },
         orderBy: { updatedAt: 'asc' },
       }),
       this.prisma.historicalPlace.findMany({
@@ -98,7 +108,10 @@ export class HistoricalPlacesService {
   async findOne(id: string) {
     const place = await this.prisma.historicalPlace.findFirst({
       where: { id, deletedAt: null, isPublished: true },
-      include: { photos: { orderBy: { orderIdx: 'asc' } } },
+      include: {
+        photos: { orderBy: { orderIdx: 'asc' } },
+        region: { select: { id: true, name: true, slug: true } },
+      },
     });
 
     if (!place) {
@@ -131,6 +144,10 @@ export class HistoricalPlacesService {
       where.city = { equals: query.city, mode: 'insensitive' };
     }
 
+    if (query.regionId) {
+      where.regionId = query.regionId;
+    }
+
     if (query.search) {
       where.OR = [
         { name: { path: ['uz'], string_contains: query.search } },
@@ -142,7 +159,10 @@ export class HistoricalPlacesService {
     const [items, total] = await Promise.all([
       this.prisma.historicalPlace.findMany({
         where,
-        include: { photos: { orderBy: { orderIdx: 'asc' } } },
+        include: {
+          photos: { orderBy: { orderIdx: 'asc' } },
+          region: { select: { id: true, name: true, slug: true } },
+        },
         orderBy: { createdAt: 'desc' },
         skip: query.skip,
         take: query.limit,
@@ -162,7 +182,10 @@ export class HistoricalPlacesService {
   async adminFindOne(id: string) {
     const place = await this.prisma.historicalPlace.findFirst({
       where: { id, deletedAt: null },
-      include: { photos: { orderBy: { orderIdx: 'asc' } } },
+      include: {
+        photos: { orderBy: { orderIdx: 'asc' } },
+        region: { select: { id: true, name: true, slug: true } },
+      },
     });
 
     if (!place) {
@@ -193,9 +216,13 @@ export class HistoricalPlacesService {
         latitude: dto.latitude,
         longitude: dto.longitude,
         city: dto.city,
+        regionId: dto.regionId || null,
         isPublished: dto.isPublished ?? false,
       },
-      include: { photos: true },
+      include: {
+        photos: true,
+        region: { select: { id: true, name: true, slug: true } },
+      },
     });
 
     this.logger.log(`Historical place created: ${place.id}`);
@@ -221,11 +248,19 @@ export class HistoricalPlacesService {
     if (dto.longitude !== undefined) data.longitude = dto.longitude;
     if (dto.city !== undefined) data.city = dto.city;
     if (dto.isPublished !== undefined) data.isPublished = dto.isPublished;
+    if (dto.regionId !== undefined) {
+      data.region = dto.regionId
+        ? { connect: { id: dto.regionId } }
+        : { disconnect: true };
+    }
 
     const place = await this.prisma.historicalPlace.update({
       where: { id },
       data,
-      include: { photos: { orderBy: { orderIdx: 'asc' } } },
+      include: {
+        photos: { orderBy: { orderIdx: 'asc' } },
+        region: { select: { id: true, name: true, slug: true } },
+      },
     });
 
     this.logger.log(`Historical place updated: ${place.id}`);

@@ -37,6 +37,10 @@ export class MuseumsService {
       where.city = { equals: query.city, mode: 'insensitive' };
     }
 
+    if (query.regionId) {
+      where.regionId = query.regionId;
+    }
+
     if (query.search) {
       where.OR = [
         { name: { path: ['uz'], string_contains: query.search } },
@@ -48,7 +52,10 @@ export class MuseumsService {
     const [items, total] = await Promise.all([
       this.prisma.museum.findMany({
         where,
-        include: { photos: { orderBy: { orderIdx: 'asc' } } },
+        include: {
+          photos: { orderBy: { orderIdx: 'asc' } },
+          region: { select: { id: true, name: true, slug: true } },
+        },
         orderBy: { createdAt: 'desc' },
         skip: query.skip,
         take: query.limit,
@@ -80,7 +87,10 @@ export class MuseumsService {
           deletedAt: null,
           isPublished: true,
         },
-        include: { photos: { orderBy: { orderIdx: 'asc' } } },
+        include: {
+          photos: { orderBy: { orderIdx: 'asc' } },
+          region: { select: { id: true, name: true, slug: true } },
+        },
         orderBy: { updatedAt: 'asc' },
       }),
       this.prisma.museum.findMany({
@@ -106,7 +116,10 @@ export class MuseumsService {
   async findOne(id: string) {
     const museum = await this.prisma.museum.findFirst({
       where: { id, deletedAt: null, isPublished: true },
-      include: { photos: { orderBy: { orderIdx: 'asc' } } },
+      include: {
+        photos: { orderBy: { orderIdx: 'asc' } },
+        region: { select: { id: true, name: true, slug: true } },
+      },
     });
 
     if (!museum) {
@@ -142,6 +155,10 @@ export class MuseumsService {
       where.city = { equals: query.city, mode: 'insensitive' };
     }
 
+    if (query.regionId) {
+      where.regionId = query.regionId;
+    }
+
     if (query.search) {
       where.OR = [
         { name: { path: ['uz'], string_contains: query.search } },
@@ -153,7 +170,10 @@ export class MuseumsService {
     const [items, total] = await Promise.all([
       this.prisma.museum.findMany({
         where,
-        include: { photos: { orderBy: { orderIdx: 'asc' } } },
+        include: {
+          photos: { orderBy: { orderIdx: 'asc' } },
+          region: { select: { id: true, name: true, slug: true } },
+        },
         orderBy: { createdAt: 'desc' },
         skip: query.skip,
         take: query.limit,
@@ -176,7 +196,10 @@ export class MuseumsService {
   async adminFindOne(id: string) {
     const museum = await this.prisma.museum.findFirst({
       where: { id, deletedAt: null },
-      include: { photos: { orderBy: { orderIdx: 'asc' } } },
+      include: {
+        photos: { orderBy: { orderIdx: 'asc' } },
+        region: { select: { id: true, name: true, slug: true } },
+      },
     });
 
     if (!museum) {
@@ -211,9 +234,13 @@ export class MuseumsService {
         latitude: dto.latitude,
         longitude: dto.longitude,
         city: dto.city,
+        regionId: dto.regionId || null,
         isPublished: dto.isPublished ?? false,
       },
-      include: { photos: true },
+      include: {
+        photos: true,
+        region: { select: { id: true, name: true, slug: true } },
+      },
     });
 
     this.logger.log(`Museum created: ${museum.id}`);
@@ -242,11 +269,19 @@ export class MuseumsService {
     if (dto.longitude !== undefined) data.longitude = dto.longitude;
     if (dto.city !== undefined) data.city = dto.city;
     if (dto.isPublished !== undefined) data.isPublished = dto.isPublished;
+    if (dto.regionId !== undefined) {
+      data.region = dto.regionId
+        ? { connect: { id: dto.regionId } }
+        : { disconnect: true };
+    }
 
     const museum = await this.prisma.museum.update({
       where: { id },
       data,
-      include: { photos: { orderBy: { orderIdx: 'asc' } } },
+      include: {
+        photos: { orderBy: { orderIdx: 'asc' } },
+        region: { select: { id: true, name: true, slug: true } },
+      },
     });
 
     this.logger.log(`Museum updated: ${museum.id}`);

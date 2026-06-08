@@ -25,6 +25,7 @@ export const museumSchema = z.object({
     .min(-180, 'validation.longitude')
     .max(180, 'validation.longitude'),
   city: z.string().min(1, 'validation.required'),
+  regionId: z.string().uuid().nullable().optional(),
   isPublished: z.boolean(),
 });
 

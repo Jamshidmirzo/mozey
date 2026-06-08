@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsDateString, IsIn } from 'class-validator';
+import { IsOptional, IsString, IsDateString, IsIn, IsUUID } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { PaginationDto } from '../../common/dto/pagination.dto';
 
@@ -26,6 +26,14 @@ export class HistoricalPlaceQueryDto extends PaginationDto {
   @IsOptional()
   @IsString()
   search?: string;
+
+  @ApiPropertyOptional({
+    description: 'Filter by region UUID',
+    format: 'uuid',
+  })
+  @IsOptional()
+  @IsUUID()
+  regionId?: string;
 
   @ApiPropertyOptional({
     description: 'Filter by status: published, draft, or deleted',

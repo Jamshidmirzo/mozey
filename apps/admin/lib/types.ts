@@ -4,6 +4,32 @@ export interface LocalizedField {
   en: string;
 }
 
+export interface Region {
+  id: string;
+  name: LocalizedField;
+  slug: string;
+  orderIdx: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
+  _count?: {
+    museums: number;
+    historicalPlaces: number;
+  };
+}
+
+export interface RegionDropdown {
+  id: string;
+  name: LocalizedField;
+  slug: string;
+}
+
+export interface RegionFormData {
+  name: LocalizedField;
+  slug: string;
+  orderIdx: number;
+}
+
 export interface Museum {
   id: string;
   legacyId: number | null;
@@ -13,6 +39,8 @@ export interface Museum {
   latitude: number;
   longitude: number;
   city: string;
+  regionId: string | null;
+  region: RegionDropdown | null;
   isPublished: boolean;
   photos: MuseumPhoto[];
   createdAt: string;
@@ -37,6 +65,8 @@ export interface HistoricalPlace {
   latitude: number;
   longitude: number;
   city: string;
+  regionId: string | null;
+  region: RegionDropdown | null;
   isPublished: boolean;
   photos: HistoricalPlacePhoto[];
   createdAt: string;
@@ -107,6 +137,7 @@ export interface MuseumFormData {
   latitude: number;
   longitude: number;
   city: string;
+  regionId?: string | null;
   isPublished: boolean;
 }
 
@@ -117,6 +148,7 @@ export interface HistoricalPlaceFormData {
   latitude: number;
   longitude: number;
   city: string;
+  regionId?: string | null;
   isPublished: boolean;
 }
 
@@ -137,6 +169,7 @@ export interface ListParams {
   limit?: number;
   search?: string;
   status?: 'published' | 'draft' | 'deleted' | 'all';
+  regionId?: string;
 }
 
 export interface AuditLogParams {

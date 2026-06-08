@@ -9,6 +9,9 @@ export const ROUTES = {
   HISTORICAL_PLACES: '/historical-places',
   HISTORICAL_PLACE_NEW: '/historical-places/new',
   HISTORICAL_PLACE_EDIT: (id: string) => `/historical-places/${id}`,
+  REGIONS: '/regions',
+  REGION_NEW: '/regions/new',
+  REGION_EDIT: (id: string) => `/regions/${id}`,
   ADMINS: '/admins',
   AUDIT_LOG: '/audit-log',
 } as const;
@@ -24,6 +27,11 @@ export const API_PATHS = {
   ADMIN_MUSEUM: (id: string) => `/admin/museums/${id}`,
   ADMIN_MUSEUM_PHOTOS: (id: string) => `/admin/museums/${id}/photos`,
   ADMIN_PHOTO: (id: string) => `/admin/photos/${id}`,
+
+  // Regions
+  ADMIN_REGIONS: '/admin/regions',
+  ADMIN_REGION: (id: string) => `/admin/regions/${id}`,
+  ADMIN_REGIONS_DROPDOWN: '/admin/regions/dropdown',
 
   // Historical Places
   ADMIN_HISTORICAL_PLACES: '/admin/historical-places',

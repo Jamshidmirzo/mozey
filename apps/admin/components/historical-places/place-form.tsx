@@ -30,6 +30,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { LanguageTabs } from '@/components/shared/language-tabs';
+import { RegionSelect } from '@/components/shared/region-select';
 import { PhotoUpload } from '@/components/museums/photo-upload';
 import type { HistoricalPlace } from '@/lib/types';
 
@@ -55,6 +56,7 @@ export function PlaceForm({ place }: PlaceFormProps) {
           latitude: place.latitude,
           longitude: place.longitude,
           city: place.city,
+          regionId: place.regionId || null,
           isPublished: place.isPublished,
         }
       : {
@@ -64,6 +66,7 @@ export function PlaceForm({ place }: PlaceFormProps) {
           latitude: 41.311081,
           longitude: 69.240562,
           city: '',
+          regionId: null,
           isPublished: false,
         },
   });
@@ -175,6 +178,22 @@ export function PlaceForm({ place }: PlaceFormProps) {
                     <FormLabel>{t('historicalPlaces.city')}</FormLabel>
                     <FormControl>
                       <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="regionId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('regions.region')}</FormLabel>
+                    <FormControl>
+                      <RegionSelect
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

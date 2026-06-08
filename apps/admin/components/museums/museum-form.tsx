@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { LanguageTabs } from '@/components/shared/language-tabs';
+import { RegionSelect } from '@/components/shared/region-select';
 import { PhotoUpload } from './photo-upload';
 import type { Museum } from '@/lib/types';
 
@@ -51,6 +52,7 @@ export function MuseumForm({ museum }: MuseumFormProps) {
           latitude: museum.latitude,
           longitude: museum.longitude,
           city: museum.city,
+          regionId: museum.regionId || null,
           isPublished: museum.isPublished,
         }
       : {
@@ -60,6 +62,7 @@ export function MuseumForm({ museum }: MuseumFormProps) {
           latitude: 41.311081,
           longitude: 69.240562,
           city: '',
+          regionId: null,
           isPublished: false,
         },
   });
@@ -171,6 +174,22 @@ export function MuseumForm({ museum }: MuseumFormProps) {
                     <FormLabel>{t('museums.city')}</FormLabel>
                     <FormControl>
                       <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="regionId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('museums.region')}</FormLabel>
+                    <FormControl>
+                      <RegionSelect
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

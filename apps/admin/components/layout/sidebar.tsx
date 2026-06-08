@@ -6,6 +6,7 @@ import { Link, usePathname } from '@/i18n/navigation';
 import {
   Building2,
   Landmark,
+  MapPin,
   Users,
   ScrollText,
   LogOut,
@@ -31,6 +32,7 @@ interface NavItem {
 function useNavItems(): NavItem[] {
   const t = useTranslations('nav');
   return [
+    { href: ROUTES.REGIONS, label: t('regions'), icon: MapPin },
     { href: ROUTES.MUSEUMS, label: t('museums'), icon: Building2 },
     { href: ROUTES.HISTORICAL_PLACES, label: t('historicalPlaces'), icon: Landmark },
     { href: ROUTES.ADMINS, label: t('admins'), icon: Users, superadminOnly: true },
