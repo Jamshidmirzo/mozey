@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { Loader2, ArrowLeft } from 'lucide-react';
+import { Loader2, ChevronLeft } from 'lucide-react';
 import { regionSchema, type RegionFormValues } from '@/lib/validations/region';
 import { useCreateRegion, useUpdateRegion } from '@/lib/hooks/use-regions';
 import { Link, useRouter } from '@/i18n/navigation';
@@ -55,7 +55,6 @@ export function RegionForm({ region }: RegionFormProps) {
 
   const isPending = createMutation.isPending || updateMutation.isPending;
 
-  // Auto-generate slug from UZ name
   const watchNameUz = form.watch('name.uz');
   React.useEffect(() => {
     if (!isEdit && watchNameUz) {
@@ -88,15 +87,14 @@ export function RegionForm({ region }: RegionFormProps) {
 
   return (
     <div className="space-y-6">
-      {/* Back button */}
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
+      <div className="flex items-center gap-3">
+        <Button variant="ghost" size="icon" asChild className="rounded-xl">
           <Link href={ROUTES.REGIONS}>
-            <ArrowLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </Link>
         </Button>
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">
+          <h2 className="text-xl font-bold tracking-tight">
             {isEdit ? t('regions.editRegion') : t('regions.createRegion')}
           </h2>
         </div>
@@ -107,12 +105,11 @@ export function RegionForm({ region }: RegionFormProps) {
           onSubmit={form.handleSubmit(onSubmit, () =>
             toast.error(t('validation.required'))
           )}
-          className="space-y-6"
+          className="space-y-5"
         >
-          {/* Localized name */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">{t('regions.name')}</CardTitle>
+              <CardTitle>{t('regions.name')}</CardTitle>
             </CardHeader>
             <CardContent>
               <LanguageTabs>
@@ -124,7 +121,7 @@ export function RegionForm({ region }: RegionFormProps) {
                     }
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t('regions.name')}</FormLabel>
+                        <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('regions.name')}</FormLabel>
                         <FormControl>
                           <Input {...field} />
                         </FormControl>
@@ -137,12 +134,9 @@ export function RegionForm({ region }: RegionFormProps) {
             </CardContent>
           </Card>
 
-          {/* Slug & order */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">
-                {t('regions.slug')} / {t('regions.orderIdx')}
-              </CardTitle>
+              <CardTitle>{t('regions.slug')} & {t('regions.orderIdx')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <FormField
@@ -150,11 +144,11 @@ export function RegionForm({ region }: RegionFormProps) {
                 name="slug"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('regions.slug')}</FormLabel>
+                    <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('regions.slug')}</FormLabel>
                     <FormControl>
                       <Input {...field} className="font-mono" />
                     </FormControl>
-                    <FormDescription>
+                    <FormDescription className="text-[12px]">
                       {t('regions.slugDescription')}
                     </FormDescription>
                     <FormMessage />
@@ -166,7 +160,7 @@ export function RegionForm({ region }: RegionFormProps) {
                 name="orderIdx"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('regions.orderIdx')}</FormLabel>
+                    <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('regions.orderIdx')}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -180,7 +174,7 @@ export function RegionForm({ region }: RegionFormProps) {
                         }
                       />
                     </FormControl>
-                    <FormDescription>
+                    <FormDescription className="text-[12px]">
                       {t('regions.orderIdxDescription')}
                     </FormDescription>
                     <FormMessage />
@@ -190,13 +184,12 @@ export function RegionForm({ region }: RegionFormProps) {
             </CardContent>
           </Card>
 
-          {/* Submit */}
-          <div className="flex items-center gap-4">
-            <Button type="submit" disabled={isPending}>
+          <div className="flex items-center gap-3 pt-2">
+            <Button type="submit" disabled={isPending} className="min-w-[120px]">
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {t('common.save')}
             </Button>
-            <Button type="button" variant="outline" asChild>
+            <Button type="button" variant="ghost" asChild>
               <Link href={ROUTES.REGIONS}>{t('common.cancel')}</Link>
             </Button>
           </div>

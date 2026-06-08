@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { type ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal, Pencil, Trash2, RotateCcw, ImageIcon } from 'lucide-react';
+import { MoreHorizontal, Pencil, Trash2, RotateCcw, ImageIcon, Building2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
@@ -90,14 +90,17 @@ export function MuseumTable() {
         cell: ({ row }) => {
           const name = getLocalizedValue(row.original.name, locale);
           return (
-            <div className="max-w-[250px]">
-              <Link
-                href={ROUTES.MUSEUM_EDIT(row.original.id)}
-                className="font-medium text-primary hover:underline"
-              >
+            <Link
+              href={ROUTES.MUSEUM_EDIT(row.original.id)}
+              className="group flex items-center gap-2.5 max-w-[280px] ios-press"
+            >
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 transition-all duration-200 group-hover:from-primary/20 group-hover:to-primary/10">
+                <Building2 className="h-4 w-4 text-primary" />
+              </div>
+              <span className="font-semibold text-foreground group-hover:text-primary transition-colors duration-200 truncate">
                 {truncate(name, 50)}
-              </Link>
-            </div>
+              </span>
+            </Link>
           );
         },
       },
@@ -105,7 +108,7 @@ export function MuseumTable() {
         accessorKey: 'city',
         header: t('museums.city'),
         cell: ({ row }) => (
-          <span className="text-sm">{row.original.city}</span>
+          <span className="text-[13px] text-muted-foreground">{row.original.city}</span>
         ),
       },
       {
@@ -113,9 +116,9 @@ export function MuseumTable() {
         header: t('museums.region'),
         cell: ({ row }) => {
           const region = row.original.region;
-          if (!region) return <span className="text-sm text-muted-foreground">-</span>;
+          if (!region) return <span className="text-[13px] text-muted-foreground">—</span>;
           return (
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="outline" className="text-[11px]">
               {getLocalizedValue(region.name, locale)}
             </Badge>
           );
@@ -138,24 +141,27 @@ export function MuseumTable() {
       {
         accessorKey: 'photos',
         header: t('museums.photos'),
-        cell: ({ row }) => (
-          <span className="text-sm text-muted-foreground">
-            {row.original.photos?.length || 0}
-          </span>
-        ),
+        cell: ({ row }) => {
+          const count = row.original.photos?.length || 0;
+          return (
+            <Badge variant={count > 0 ? 'default' : 'secondary'}>
+              {count}
+            </Badge>
+          );
+        },
       },
       {
         accessorKey: 'updatedAt',
         header: t('common.updatedAt'),
         cell: ({ row }) => (
-          <span className="text-sm text-muted-foreground">
+          <span className="text-[13px] text-muted-foreground">
             {formatDate(row.original.updatedAt, locale)}
           </span>
         ),
       },
       {
         id: 'actions',
-        header: t('common.actions'),
+        header: '',
         cell: ({ row }) => {
           const museum = row.original;
           const isDeleted = !!museum.deletedAt;
@@ -163,32 +169,32 @@ export function MuseumTable() {
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg">
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild>
+              <DropdownMenuContent align="end" className="glass-card min-w-[180px]">
+                <DropdownMenuItem asChild className="rounded-lg">
                   <Link href={ROUTES.MUSEUM_EDIT(museum.id)}>
                     <Pencil className="mr-2 h-4 w-4" />
                     {t('common.edit')}
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem asChild className="rounded-lg">
                   <Link href={ROUTES.MUSEUM_PHOTOS(museum.id)}>
                     <ImageIcon className="mr-2 h-4 w-4" />
                     {t('museums.managePhotos')}
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="bg-border/40" />
                 {isDeleted ? (
-                  <DropdownMenuItem onClick={() => handleRestore(museum)}>
+                  <DropdownMenuItem onClick={() => handleRestore(museum)} className="rounded-lg">
                     <RotateCcw className="mr-2 h-4 w-4" />
                     {t('common.restore')}
                   </DropdownMenuItem>
                 ) : (
                   <DropdownMenuItem
-                    className="text-destructive"
+                    className="text-destructive rounded-lg focus:text-destructive"
                     onClick={() => handleDelete(museum)}
                   >
                     <Trash2 className="mr-2 h-4 w-4" />
@@ -216,10 +222,10 @@ export function MuseumTable() {
           }))
         }
       >
-        <SelectTrigger className="w-[160px]">
+        <SelectTrigger className="w-[160px] h-10 rounded-xl border-0 bg-card ios-shadow-sm text-[13px]">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="glass-card">
           <SelectItem value="all">{t('common.all')}</SelectItem>
           <SelectItem value="published">{t('museums.filterPublished')}</SelectItem>
           <SelectItem value="draft">{t('museums.filterDraft')}</SelectItem>

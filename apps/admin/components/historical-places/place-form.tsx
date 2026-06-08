@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { Loader2, ArrowLeft } from 'lucide-react';
+import { Loader2, ChevronLeft } from 'lucide-react';
 import {
   historicalPlaceSchema,
   type HistoricalPlaceFormValues,
@@ -90,26 +90,24 @@ export function PlaceForm({ place }: PlaceFormProps) {
 
   return (
     <div className="space-y-6">
-      {/* Back button */}
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
+      <div className="flex items-center gap-3">
+        <Button variant="ghost" size="icon" asChild className="rounded-xl">
           <Link href={ROUTES.HISTORICAL_PLACES}>
-            <ArrowLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </Link>
         </Button>
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">
+          <h2 className="text-xl font-bold tracking-tight">
             {isEdit ? t('historicalPlaces.editPlace') : t('historicalPlaces.createPlace')}
           </h2>
         </div>
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, () => toast.error(t('validation.required')))} className="space-y-6">
-          {/* Localized fields */}
+        <form onSubmit={form.handleSubmit(onSubmit, () => toast.error(t('validation.required')))} className="space-y-5">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">
+              <CardTitle>
                 {t('historicalPlaces.name')} / {t('historicalPlaces.description')} / {t('historicalPlaces.ticketPrice')}
               </CardTitle>
             </CardHeader>
@@ -122,7 +120,7 @@ export function PlaceForm({ place }: PlaceFormProps) {
                       name={`name.${lang}` as `name.uz` | `name.ru` | `name.en`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t('historicalPlaces.name')}</FormLabel>
+                          <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('historicalPlaces.name')}</FormLabel>
                           <FormControl>
                             <Input {...field} />
                           </FormControl>
@@ -135,9 +133,9 @@ export function PlaceForm({ place }: PlaceFormProps) {
                       name={`description.${lang}` as `description.uz` | `description.ru` | `description.en`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t('historicalPlaces.description')}</FormLabel>
+                          <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('historicalPlaces.description')}</FormLabel>
                           <FormControl>
-                            <Textarea rows={5} {...field} />
+                            <Textarea rows={5} {...field} className="rounded-xl border-0 bg-secondary/70 ring-1 ring-border/50 focus-visible:ring-2 focus-visible:ring-primary/50 transition-all duration-200 ease-ios" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -148,7 +146,7 @@ export function PlaceForm({ place }: PlaceFormProps) {
                       name={`ticketPrice.${lang}` as `ticketPrice.uz` | `ticketPrice.ru` | `ticketPrice.en`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t('historicalPlaces.ticketPrice')}</FormLabel>
+                          <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('historicalPlaces.ticketPrice')}</FormLabel>
                           <FormControl>
                             <Input {...field} />
                           </FormControl>
@@ -162,10 +160,9 @@ export function PlaceForm({ place }: PlaceFormProps) {
             </CardContent>
           </Card>
 
-          {/* Location & metadata */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">
+              <CardTitle>
                 {t('historicalPlaces.city')} / {t('historicalPlaces.latitude')} / {t('historicalPlaces.longitude')}
               </CardTitle>
             </CardHeader>
@@ -175,7 +172,7 @@ export function PlaceForm({ place }: PlaceFormProps) {
                 name="city"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('historicalPlaces.city')}</FormLabel>
+                    <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('historicalPlaces.city')}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -188,7 +185,7 @@ export function PlaceForm({ place }: PlaceFormProps) {
                 name="regionId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('regions.region')}</FormLabel>
+                    <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('regions.region')}</FormLabel>
                     <FormControl>
                       <RegionSelect
                         value={field.value}
@@ -205,7 +202,7 @@ export function PlaceForm({ place }: PlaceFormProps) {
                   name="latitude"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('historicalPlaces.latitude')}</FormLabel>
+                      <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('historicalPlaces.latitude')}</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
@@ -227,7 +224,7 @@ export function PlaceForm({ place }: PlaceFormProps) {
                   name="longitude"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('historicalPlaces.longitude')}</FormLabel>
+                      <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('historicalPlaces.longitude')}</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
@@ -250,7 +247,7 @@ export function PlaceForm({ place }: PlaceFormProps) {
                 control={form.control}
                 name="isPublished"
                 render={({ field }) => (
-                  <FormItem className="flex items-center gap-3 rounded-lg border p-4">
+                  <FormItem className="flex items-center gap-3 rounded-2xl bg-secondary/50 p-4 transition-colors duration-200">
                     <FormControl>
                       <Switch
                         checked={field.value}
@@ -258,7 +255,7 @@ export function PlaceForm({ place }: PlaceFormProps) {
                       />
                     </FormControl>
                     <div className="space-y-0.5">
-                      <FormLabel className="text-base">
+                      <FormLabel className="text-sm font-semibold">
                         {t('historicalPlaces.isPublished')}
                       </FormLabel>
                     </div>
@@ -268,24 +265,22 @@ export function PlaceForm({ place }: PlaceFormProps) {
             </CardContent>
           </Card>
 
-          {/* Submit */}
-          <div className="flex items-center gap-4">
-            <Button type="submit" disabled={isPending}>
+          <div className="flex items-center gap-3 pt-2">
+            <Button type="submit" disabled={isPending} className="min-w-[120px]">
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {t('common.save')}
             </Button>
-            <Button type="button" variant="outline" asChild>
+            <Button type="button" variant="ghost" asChild>
               <Link href={ROUTES.HISTORICAL_PLACES}>{t('common.cancel')}</Link>
             </Button>
           </div>
         </form>
       </Form>
 
-      {/* Photo management - only for existing places */}
       {isEdit && place && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">{t('historicalPlaces.managePhotos')}</CardTitle>
+            <CardTitle>{t('historicalPlaces.managePhotos')}</CardTitle>
           </CardHeader>
           <CardContent>
             <PhotoUpload

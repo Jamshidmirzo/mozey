@@ -18,13 +18,17 @@ export function DashboardShell({
   headerActions,
 }: DashboardShellProps) {
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-background">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Header title={title} description={description}>
           {headerActions}
         </Header>
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
+          <div className="mx-auto max-w-6xl animate-ios-slide-up">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );

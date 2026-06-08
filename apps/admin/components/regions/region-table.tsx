@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { type ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Pencil, Trash2, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 import { DataTable } from '@/components/shared/data-table';
 import { Badge } from '@/components/ui/badge';
@@ -56,9 +56,9 @@ export function RegionTable() {
         accessorKey: 'orderIdx',
         header: '#',
         cell: ({ row }) => (
-          <span className="text-sm text-muted-foreground">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/8 text-xs font-bold text-primary">
             {row.original.orderIdx}
-          </span>
+          </div>
         ),
       },
       {
@@ -69,9 +69,14 @@ export function RegionTable() {
           return (
             <Link
               href={ROUTES.REGION_EDIT(row.original.id)}
-              className="font-medium text-primary hover:underline"
+              className="group flex items-center gap-2.5 ios-press"
             >
-              {name}
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 transition-all duration-200 group-hover:from-primary/20 group-hover:to-primary/10">
+                <MapPin className="h-4 w-4 text-primary" />
+              </div>
+              <span className="font-semibold text-foreground group-hover:text-primary transition-colors duration-200">
+                {name}
+              </span>
             </Link>
           );
         },
@@ -80,7 +85,7 @@ export function RegionTable() {
         accessorKey: 'slug',
         header: 'Slug',
         cell: ({ row }) => (
-          <Badge variant="outline" className="font-mono text-xs">
+          <Badge variant="outline" className="font-mono text-[11px]">
             {row.original.slug}
           </Badge>
         ),
@@ -88,52 +93,58 @@ export function RegionTable() {
       {
         id: 'museumCount',
         header: t('regions.museumCount'),
-        cell: ({ row }) => (
-          <span className="text-sm">
-            {row.original._count?.museums ?? 0}
-          </span>
-        ),
+        cell: ({ row }) => {
+          const count = row.original._count?.museums ?? 0;
+          return (
+            <Badge variant={count > 0 ? 'default' : 'secondary'}>
+              {count}
+            </Badge>
+          );
+        },
       },
       {
         id: 'placeCount',
         header: t('regions.placeCount'),
-        cell: ({ row }) => (
-          <span className="text-sm">
-            {row.original._count?.historicalPlaces ?? 0}
-          </span>
-        ),
+        cell: ({ row }) => {
+          const count = row.original._count?.historicalPlaces ?? 0;
+          return (
+            <Badge variant={count > 0 ? 'success' : 'secondary'}>
+              {count}
+            </Badge>
+          );
+        },
       },
       {
         accessorKey: 'updatedAt',
         header: t('common.updatedAt'),
         cell: ({ row }) => (
-          <span className="text-sm text-muted-foreground">
+          <span className="text-[13px] text-muted-foreground">
             {formatDate(row.original.updatedAt, locale)}
           </span>
         ),
       },
       {
         id: 'actions',
-        header: t('common.actions'),
+        header: '',
         cell: ({ row }) => {
           const region = row.original;
           return (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg">
                   <MoreHorizontal className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild>
+              <DropdownMenuContent align="end" className="glass-card min-w-[160px]">
+                <DropdownMenuItem asChild className="rounded-lg">
                   <Link href={ROUTES.REGION_EDIT(region.id)}>
                     <Pencil className="mr-2 h-4 w-4" />
                     {t('common.edit')}
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="bg-border/40" />
                 <DropdownMenuItem
-                  className="text-destructive"
+                  className="text-destructive rounded-lg focus:text-destructive"
                   onClick={() => handleDelete(region)}
                 >
                   <Trash2 className="mr-2 h-4 w-4" />

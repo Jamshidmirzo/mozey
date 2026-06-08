@@ -5,7 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { Loader2, ArrowLeft } from 'lucide-react';
+import { Loader2, ChevronLeft } from 'lucide-react';
 import { museumSchema, type MuseumFormValues } from '@/lib/validations/museum';
 import { useCreateMuseum, useUpdateMuseum } from '@/lib/hooks/use-museums';
 import { Link, useRouter } from '@/i18n/navigation';
@@ -86,26 +86,24 @@ export function MuseumForm({ museum }: MuseumFormProps) {
 
   return (
     <div className="space-y-6">
-      {/* Back button */}
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
+      <div className="flex items-center gap-3">
+        <Button variant="ghost" size="icon" asChild className="rounded-xl">
           <Link href={ROUTES.MUSEUMS}>
-            <ArrowLeft className="h-5 w-5" />
+            <ChevronLeft className="h-5 w-5" />
           </Link>
         </Button>
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">
+          <h2 className="text-xl font-bold tracking-tight">
             {isEdit ? t('museums.editMuseum') : t('museums.createMuseum')}
           </h2>
         </div>
       </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit, () => toast.error(t('validation.required')))} className="space-y-6">
-          {/* Localized fields with language tabs */}
+        <form onSubmit={form.handleSubmit(onSubmit, () => toast.error(t('validation.required')))} className="space-y-5">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">
+              <CardTitle>
                 {t('museums.name')} / {t('museums.description')} / {t('museums.ticketPrice')}
               </CardTitle>
             </CardHeader>
@@ -118,7 +116,7 @@ export function MuseumForm({ museum }: MuseumFormProps) {
                       name={`name.${lang}` as `name.uz` | `name.ru` | `name.en`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t('museums.name')}</FormLabel>
+                          <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('museums.name')}</FormLabel>
                           <FormControl>
                             <Input {...field} />
                           </FormControl>
@@ -131,9 +129,9 @@ export function MuseumForm({ museum }: MuseumFormProps) {
                       name={`description.${lang}` as `description.uz` | `description.ru` | `description.en`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t('museums.description')}</FormLabel>
+                          <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('museums.description')}</FormLabel>
                           <FormControl>
-                            <Textarea rows={5} {...field} />
+                            <Textarea rows={5} {...field} className="rounded-xl border-0 bg-secondary/70 ring-1 ring-border/50 focus-visible:ring-2 focus-visible:ring-primary/50 transition-all duration-200 ease-ios" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -144,7 +142,7 @@ export function MuseumForm({ museum }: MuseumFormProps) {
                       name={`ticketPrice.${lang}` as `ticketPrice.uz` | `ticketPrice.ru` | `ticketPrice.en`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t('museums.ticketPrice')}</FormLabel>
+                          <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('museums.ticketPrice')}</FormLabel>
                           <FormControl>
                             <Input {...field} />
                           </FormControl>
@@ -158,10 +156,9 @@ export function MuseumForm({ museum }: MuseumFormProps) {
             </CardContent>
           </Card>
 
-          {/* Location & metadata */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">
+              <CardTitle>
                 {t('museums.city')} / {t('museums.latitude')} / {t('museums.longitude')}
               </CardTitle>
             </CardHeader>
@@ -171,7 +168,7 @@ export function MuseumForm({ museum }: MuseumFormProps) {
                 name="city"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('museums.city')}</FormLabel>
+                    <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('museums.city')}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -184,7 +181,7 @@ export function MuseumForm({ museum }: MuseumFormProps) {
                 name="regionId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('museums.region')}</FormLabel>
+                    <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('museums.region')}</FormLabel>
                     <FormControl>
                       <RegionSelect
                         value={field.value}
@@ -201,7 +198,7 @@ export function MuseumForm({ museum }: MuseumFormProps) {
                   name="latitude"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('museums.latitude')}</FormLabel>
+                      <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('museums.latitude')}</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
@@ -225,7 +222,7 @@ export function MuseumForm({ museum }: MuseumFormProps) {
                   name="longitude"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('museums.longitude')}</FormLabel>
+                      <FormLabel className="text-[13px] text-muted-foreground font-medium">{t('museums.longitude')}</FormLabel>
                       <FormControl>
                         <Input
                           type="number"
@@ -250,7 +247,7 @@ export function MuseumForm({ museum }: MuseumFormProps) {
                 control={form.control}
                 name="isPublished"
                 render={({ field }) => (
-                  <FormItem className="flex items-center gap-3 rounded-lg border p-4">
+                  <FormItem className="flex items-center gap-3 rounded-2xl bg-secondary/50 p-4 transition-colors duration-200">
                     <FormControl>
                       <Switch
                         checked={field.value}
@@ -258,7 +255,7 @@ export function MuseumForm({ museum }: MuseumFormProps) {
                       />
                     </FormControl>
                     <div className="space-y-0.5">
-                      <FormLabel className="text-base">
+                      <FormLabel className="text-sm font-semibold">
                         {t('museums.isPublished')}
                       </FormLabel>
                     </div>
@@ -268,24 +265,22 @@ export function MuseumForm({ museum }: MuseumFormProps) {
             </CardContent>
           </Card>
 
-          {/* Submit */}
-          <div className="flex items-center gap-4">
-            <Button type="submit" disabled={isPending}>
+          <div className="flex items-center gap-3 pt-2">
+            <Button type="submit" disabled={isPending} className="min-w-[120px]">
               {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {t('common.save')}
             </Button>
-            <Button type="button" variant="outline" asChild>
+            <Button type="button" variant="ghost" asChild>
               <Link href={ROUTES.MUSEUMS}>{t('common.cancel')}</Link>
             </Button>
           </div>
         </form>
       </Form>
 
-      {/* Photo management - only for existing museums */}
       {isEdit && museum && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">{t('museums.managePhotos')}</CardTitle>
+            <CardTitle>{t('museums.managePhotos')}</CardTitle>
           </CardHeader>
           <CardContent>
             <PhotoUpload

@@ -27,49 +27,46 @@ export function Header({ title, description, children }: HeaderProps) {
   const { setTheme } = useTheme();
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center gap-4 glass border-b-0 px-5 sm:px-6">
       <MobileSidebar />
 
-      {/* Page title */}
       <div className="flex-1">
         {title && (
-          <div>
-            <h1 className="text-lg font-semibold">{title}</h1>
+          <div className="animate-ios-fade-in">
+            <h1 className="text-[17px] font-bold tracking-tight">{title}</h1>
             {description && (
-              <p className="text-sm text-muted-foreground">{description}</p>
+              <p className="text-[13px] text-muted-foreground">{description}</p>
             )}
           </div>
         )}
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
         {children}
 
         <LocaleSwitcher />
 
-        {/* Theme toggle */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <Button variant="ghost" size="icon" className="rounded-xl">
+              <Sun className="h-[18px] w-[18px] rotate-0 scale-100 transition-all duration-300 ease-ios dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-[18px] w-[18px] rotate-90 scale-0 transition-all duration-300 ease-ios dark:rotate-0 dark:scale-100" />
               <span className="sr-only">{t('theme')}</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>{t('theme')}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => setTheme('light')}>
-              <Sun className="mr-2 h-4 w-4" />
+          <DropdownMenuContent align="end" className="glass-card min-w-[160px]">
+            <DropdownMenuLabel className="text-xs text-muted-foreground">{t('theme')}</DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-border/40" />
+            <DropdownMenuItem onClick={() => setTheme('light')} className="rounded-lg">
+              <Sun className="mr-2 h-4 w-4 text-amber-500" />
               {t('light')}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('dark')}>
-              <Moon className="mr-2 h-4 w-4" />
+            <DropdownMenuItem onClick={() => setTheme('dark')} className="rounded-lg">
+              <Moon className="mr-2 h-4 w-4 text-indigo-400" />
               {t('dark')}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme('system')}>
-              <Monitor className="mr-2 h-4 w-4" />
+            <DropdownMenuItem onClick={() => setTheme('system')} className="rounded-lg">
+              <Monitor className="mr-2 h-4 w-4 text-muted-foreground" />
               {t('system')}
             </DropdownMenuItem>
           </DropdownMenuContent>

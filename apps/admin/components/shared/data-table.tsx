@@ -84,15 +84,15 @@ export function DataTable<TData, TValue>({
 
   if (isLoading) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 animate-ios-fade-in">
         <div className="flex items-center gap-4">
-          <Skeleton className="h-10 w-[300px]" />
-          <Skeleton className="h-10 w-[150px]" />
+          <Skeleton className="h-11 w-[300px] rounded-xl" />
+          <Skeleton className="h-11 w-[150px] rounded-xl" />
         </div>
-        <div className="rounded-md border">
-          <div className="space-y-2 p-4">
+        <div className="rounded-2xl bg-card ios-shadow overflow-hidden">
+          <div className="space-y-1 p-1">
             {Array.from({ length: 5 }).map((_, i) => (
-              <Skeleton key={i} className="h-12 w-full" />
+              <Skeleton key={i} className="h-14 w-full rounded-xl" />
             ))}
           </div>
         </div>
@@ -102,15 +102,15 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         {onSearchChange && (
           <div className="relative w-full sm:max-w-sm">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/60" />
             <Input
               placeholder={t('search')}
               value={localSearch}
               onChange={(e) => handleSearchChange(e.target.value)}
-              className="pl-9"
+              className="pl-11 bg-card ios-shadow-sm"
             />
           </div>
         )}
@@ -119,11 +119,11 @@ export function DataTable<TData, TValue>({
         )}
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-2xl bg-card ios-shadow overflow-hidden">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="hover:bg-transparent border-border/40">
                 {headerGroup.headers.map((header) => (
                   <TableHead key={header.id}>
                     {header.isPlaceholder
@@ -158,7 +158,7 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-32 text-center text-muted-foreground"
                 >
                   {t('noResults')}
                 </TableCell>
@@ -169,24 +169,24 @@ export function DataTable<TData, TValue>({
       </div>
 
       {(onPageChange || onPageSizeChange) && (
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="text-sm text-muted-foreground">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between animate-ios-fade-in">
+          <div className="text-[13px] text-muted-foreground font-medium">
             {t('total')}: {total} {t('rows')}
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {onPageSizeChange && (
               <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">
+                <span className="text-[13px] text-muted-foreground">
                   {t('perPage')}:
                 </span>
                 <Select
                   value={String(pageSize)}
                   onValueChange={(value) => onPageSizeChange(Number(value))}
                 >
-                  <SelectTrigger className="w-[70px]">
+                  <SelectTrigger className="w-[70px] h-9 rounded-lg bg-card ios-shadow-sm border-0 text-[13px]">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="glass-card">
                     {PAGE_SIZE_OPTIONS.map((size) => (
                       <SelectItem key={size} value={String(size)}>
                         {size}
@@ -197,13 +197,14 @@ export function DataTable<TData, TValue>({
               </div>
             )}
             {onPageChange && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">
-                  {t('page')} {page} {t('of')} {totalPages}
+              <div className="flex items-center gap-1.5">
+                <span className="text-[13px] text-muted-foreground mr-1">
+                  {page} / {totalPages}
                 </span>
                 <Button
                   variant="outline"
                   size="icon"
+                  className="h-9 w-9 rounded-lg border-0 bg-card ios-shadow-sm"
                   onClick={() => onPageChange(page - 1)}
                   disabled={page <= 1}
                 >
@@ -212,6 +213,7 @@ export function DataTable<TData, TValue>({
                 <Button
                   variant="outline"
                   size="icon"
+                  className="h-9 w-9 rounded-lg border-0 bg-card ios-shadow-sm"
                   onClick={() => onPageChange(page + 1)}
                   disabled={page >= totalPages}
                 >
