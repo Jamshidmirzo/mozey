@@ -152,6 +152,41 @@ export class AdminHistoricalPlacesController {
 
     return photo;
   }
+
+  @Post(':id/photos/bulk')
+  @Roles('superadmin', 'editor')
+  @ApiOperation({
+    summary: 'Bulk import photos for a historical place',
+    description:
+      'Replaces all existing photos with the provided list. ' +
+      'Used by migration scripts to seed photos from Flutter assets.',
+  })
+  @ApiResponse({ status: 201, description: 'Photos imported' })
+  @ApiResponse({ status: 404, description: 'Place not found' })
+  async bulkImportPhotos(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: { photos: Array<{ url: string; orderIdx: number }> },
+    @CurrentUser() admin: { id: string },
+  ) {
+    const result = await this.historicalPlacesService.bulkImportPhotos(
+      id,
+      body.photos,
+    );
+
+    await this.auditLogService.log({
+      adminId: admin.id,
+      action: 'bulk_import_photos',
+      entityType: 'historical_place',
+      entityId: id,
+      diff: {
+        deletedCount: result.deletedCount,
+        createdCount: result.createdCount,
+        urls: body.photos.map((p) => p.url),
+      },
+    });
+
+    return result;
+  }
 }
 
 /**

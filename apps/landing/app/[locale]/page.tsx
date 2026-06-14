@@ -3,10 +3,12 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Hero } from '@/components/sections/hero';
 import { Features } from '@/components/sections/features';
-import { Screenshots } from '@/components/sections/screenshots';
-import { Statistics } from '@/components/sections/statistics';
-import { Download } from '@/components/sections/download';
-import { CustomCursor } from '@/components/effects/custom-cursor';
+import { Catalog } from '@/components/sections/catalog';
+import { MapSection } from '@/components/sections/map-section';
+import { Stats } from '@/components/sections/stats';
+import { Reviews } from '@/components/sections/reviews';
+import { FAQ } from '@/components/sections/faq';
+import { CTA } from '@/components/sections/cta';
 
 export default function LandingPage({
   params: { locale },
@@ -17,14 +19,16 @@ export default function LandingPage({
 
   return (
     <>
-      <CustomCursor />
       <Header />
       <main>
         <Hero />
         <Features />
-        <Screenshots />
-        <Statistics />
-        <Download />
+        <Catalog />
+        <MapSection />
+        <Stats />
+        <Reviews />
+        <FAQ />
+        <CTA />
       </main>
       <Footer />
     </>

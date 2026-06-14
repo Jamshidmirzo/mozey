@@ -4,77 +4,148 @@
     "description": "O'zbekiston bo'ylab 281 ta muzey va 101 ta tarixiy joyni kashf eting. Oflayn rejim, 3 til, qorong'i rejim va boshqa ko'plab imkoniyatlar."
   },
   "nav": {
+    "museums": "Muzeylar",
+    "places": "Joylar",
+    "map": "Xarita",
+    "about": "Ilova haqida",
     "features": "Imkoniyatlar",
     "screenshots": "Skrinshotlar",
     "statistics": "Statistika",
     "download": "Yuklab olish"
   },
+  "header": {
+    "download": "Yuklab olish",
+    "downloadApp": "Ilovani yuklab olish"
+  },
   "hero": {
-    "badge": "Bepul ilova",
-    "title": "Mozey",
-    "subtitle": "Buyuk ipak yo'li merosini kashf eting",
-    "description": "O'zbekiston bo'ylab 281 ta muzey va 101 ta tarixiy joyni bitta ilovada o'rganing. Internetsiz ishlaydi, 3 tilda mavjud.",
+    "badge": "281 muzey · 101 yodgorlik · oflayn",
+    "titleLine1": "O'zbekiston muzeylari",
+    "titleLine2": "va yodgorliklari —",
+    "titleLine3": "bitta ilovada",
+    "subtitle": "Mamlakatning madaniy merosi bo'yicha qo'llanma: cho'ldagi Luvrdan Registongacha. O'qing, marshrutlarni saqlang va xaritani oching — hatto internet bo'lmagan joyda ham.",
+    "offlineBadge": "Butun katalog oflayn ishlaydi — maqolalar, xarita va rasmlar oldindan yuklangan.",
     "downloadIos": "App Store'dan yuklab olish",
     "downloadAndroid": "Google Play'dan yuklab olish"
   },
   "features": {
-    "sectionLabel": "Imkoniyatlar",
-    "title": "Nima uchun bizning ilovamiz?",
-    "subtitle": "O'zbekiston madaniy merosini kashf qilish uchun barcha kerakli vositalar",
     "offline": {
-      "title": "Oflayn rejim",
-      "description": "Internet aloqasisiz ishlaydi. Samolyot rejimida ham barcha muzeylar haqida ma'lumot oling."
+      "title": "To'liq oflayn",
+      "text": "Har bir maqola, xarita va rasm oldindan yuklangan. Xivada internetsiz va rouming to'lovisiz katalogni ko'ring."
     },
-    "languages": {
-      "title": "3 tilda mavjud",
-      "description": "O'zbek, rus va ingliz tillarida to'liq ma'lumot. Til almashtirish bir bosish bilan."
+    "map": {
+      "title": "Xarita yaqinda",
+      "text": "Mamlakatning yagona xaritasida barcha 382 nuqta. Kunni bir shahardagi yaqin yodgorliklarga rejalashtiring."
     },
-    "museums": {
-      "title": "281+ muzey",
-      "description": "O'zbekistonning barcha 14 viloyati bo'ylab muzeylarning to'liq ma'lumotlar bazasi."
+    "bookmarks": {
+      "title": "Sevimlilar va marshrutlar",
+      "text": "Muzeylar va joylarni bitta ro'yxatga saqlang — u sayohatingizda siz bilan qoladi, akkaunt kerak emas."
     },
-    "darkMode": {
-      "title": "Qorong'i rejim",
-      "description": "Ko'zni charchatmaydigan qorong'i tema. Kun va tun rejimi o'rtasida osongina almashtiring."
-    },
-    "search": {
-      "title": "Tezkor qidiruv",
-      "description": "Muzey nomi, shahar yoki viloyat bo'yicha bir zumda toping."
-    },
-    "favorites": {
-      "title": "Sevimlilar",
-      "description": "Sevimli muzeylaringizni saqlang va ularni keyinroq tez toping."
+    "audio": {
+      "title": "Uch tilda audiogid",
+      "text": "Asosiy ob'ektlar uchun o'zbek, rus va ingliz tillari — to'g'ridan-to'g'ri joyida tinglang."
     }
   },
-  "screenshots": {
-    "sectionLabel": "Ilova ko'rinishi",
-    "title": "Ilovani ichidan ko'ring",
-    "subtitle": "Zamonaviy dizayn va qulay interfeys"
+  "catalog": {
+    "overline": "Katalog · serverdan ma'lumotlar",
+    "title": "Muzeylar va tarixiy joylar",
+    "switchMuseums": "Muzeylar ({count})",
+    "switchPlaces": "Tar. joylar ({count})",
+    "searchMuseums": "Muzeylarni qidirish...",
+    "searchPlaces": "Tarixiy joylarni qidirish...",
+    "allRegions": "Barcha viloyatlar",
+    "allMuseums": "Barcha muzeylar",
+    "allPlaces": "Barcha joylar",
+    "countSingular": "ob'ekt",
+    "countPlural": "ob'ekt",
+    "emptyTitle": "Hech narsa topilmadi",
+    "emptyText": "So'rovni yoki viloyatni o'zgartirib ko'ring.",
+    "loading": "Katalog yuklanmoqda...",
+    "recommended": "Tavsiya etamiz",
+    "openCard": "Kartochkani ochish"
   },
-  "statistics": {
-    "sectionLabel": "Raqamlarda",
-    "title": "O'zbekiston madaniy merosi",
-    "subtitle": "Dunyodagi eng boy madaniy meroslardan birini kashf eting",
-    "museums": "Muzeylar",
-    "historicalPlaces": "Tarixiy joylar",
-    "languages": "Til",
-    "regions": "Viloyat"
+  "mapSection": {
+    "overline": "Xarita",
+    "title": "Butun mamlakat — bitta xaritada",
+    "subtitle": "G'arbdagi Nukusdan sharqdagi Toshkentgacha. Ob'ektni ochish uchun nuqtani bosing.",
+    "nearbyPoints": "{count} ta yaqin nuqta · Google Maps'da ochiladi"
   },
-  "download": {
-    "sectionLabel": "Yuklab olish",
-    "title": "Hoziroq yuklab oling",
-    "subtitle": "O'zbekiston muzeylarini cho'ntagingizda olib yuring. Ilova iOS va Android uchun bepul.",
-    "qrHint": "QR kodni skanerlang yoki tugmani bosing",
-    "downloadIos": "App Store",
-    "downloadAndroid": "Google Play"
+  "stats": {
+    "museums": "butun mamlakat bo'ylab muzey",
+    "places": "tarixiy joy",
+    "regions": "madaniy viloyat",
+    "languages": "tilda audiogid"
+  },
+  "reviews": {
+    "overline": "Sharhlar",
+    "title": "Ilova bilan mamlakat bo'ylab sayohat qiling",
+    "review1": {
+      "text": "Samarqandga sayohat oldidan yuklab oldim — bir marta ham qo'llanma chiqarmadim. Internetsiz ham hamma narsa qo'l ostida.",
+      "name": "Dinora",
+      "role": "Toshkent"
+    },
+    "review2": {
+      "text": "Maqolalar qisqa, lekin aniq — bir daqiqada joyning ahamiyatini tushunasiz. Xarita Buxoroda kunni rejalashtirishga yordam berdi.",
+      "name": "Aleksey",
+      "role": "sayohatchi"
+    },
+    "review3": {
+      "text": "Nihoyat O'zbekiston muzeylari haqida normal ilova. Marshrutni saqladim, rus tilidagi audiogid — aynan kerak narsa.",
+      "name": "Sabina",
+      "role": "gid"
+    }
+  },
+  "faq": {
+    "overline": "Savollar",
+    "title": "Ko'p beriladigan savollar",
+    "q1": "Ilova haqiqatan ham oflayn ishlaydi?",
+    "a1": "Ha. O'rnatilgandan so'ng butun katalog — maqolalar, xarita va rasmlar — qurilmada saqlanadi. O'qish yoki xaritada harakat qilish uchun internet kerak emas.",
+    "q2": "Ilova qancha turadi?",
+    "a2": "Ilova bepul. Kartochkalardagi narxlar — bu muzeylar va ob'ektlarga kirish chiptalarining taxminiy narxi, o'zbek so'mida.",
+    "q3": "Kontent qaysi tillarda mavjud?",
+    "a3": "Interfeys va maqolalar — o'zbek, rus va ingliz tillarida. Asosiy ob'ektlar uchun shu uch tilda audiogid mavjud.",
+    "q4": "Ro'yxatdan o'tish kerakmi?",
+    "a4": "Yo'q. Sevimlilar va marshrutlar qurilmangizda mahalliy saqlanadi — akkaunt va ma'lumot uzatish talab qilinmaydi.",
+    "q5": "Katalog qanchalik tez-tez yangilanadi?",
+    "a5": "Biz muntazam ravishda yangi muzeylar va yodgorliklarni qo'shamiz hamda ish vaqtlarini aniqlashtramiz. Yangilanishlar ilovaning yangi versiyasi bilan birga keladi."
+  },
+  "cta": {
+    "overline": "Bepul · iOS va Android",
+    "title": "O'zbekiston merosini o'zingiz bilan oling",
+    "subtitle": "382 muzey va yodgorlik, xarita va audiogid — cho'ntagingizda va internetsiz. Sayohat oldidan ilovani o'rnating."
   },
   "footer": {
-    "description": "O'zbekiston muzeylarini kashf qilish uchun eng yaxshi ilova. Mozey tomonidan yaratilgan.",
-    "navigation": "Sahifalar",
-    "legal": "Huquqiy",
-    "social": "Ijtimoiy tarmoqlar",
-    "privacy": "Maxfiylik siyosati",
-    "terms": "Foydalanish shartlari",
-    "copyright": "Mozey. Barcha huquqlar himoyalangan."
+    "description": "O'zbekiston muzeylari va yodgorliklari bo'yicha qo'llanma. Oflayn ishlaydi.",
+    "colCatalog": "Katalog",
+    "linkMuseums": "Muzeylar",
+    "linkPlaces": "Tarixiy joylar",
+    "linkMap": "Xarita",
+    "colApp": "Ilova",
+    "linkFeatures": "Imkoniyatlar",
+    "linkDownload": "Yuklab olish",
+    "linkAudioguide": "Audiogid",
+    "colHelp": "Yordam",
+    "linkFaq": "Ko'p beriladigan savollar",
+    "linkContact": "Bog'lanish",
+    "linkPrivacy": "Ma'lumotlar siyosati",
+    "copyright": "O'zbekiston Muzeylari. Barcha huquqlar himoyalangan."
+  },
+  "detail": {
+    "info": "Ma'lumot",
+    "location": "Joylashuv",
+    "hours": "Ish vaqti",
+    "ticket": "Chipta",
+    "languages": "Tillar",
+    "foundation": "Asos solingan",
+    "openGoogleMaps": "Google Maps'da ochish",
+    "otherMuseums": "Boshqa muzeylar",
+    "nearby": "Yaqin atrofda"
+  },
+  "common": {
+    "download": "Yuklab olish",
+    "loading": "Yuklanmoqda...",
+    "appStore": "App Store",
+    "googlePlay": "Google Play",
+    "downloadFromAppStore": "Yuklab oling",
+    "availableOnGooglePlay": "Mavjud"
   }
 }

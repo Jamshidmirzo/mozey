@@ -58,3 +58,4 @@ infra/minio-data/
 tmp/
 temp/
 .vercel
+firebase-service-account.json

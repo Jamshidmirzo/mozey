@@ -14,6 +14,7 @@ export const ROUTES = {
   REGION_EDIT: (id: string) => `/regions/${id}`,
   ADMINS: '/admins',
   AUDIT_LOG: '/audit-log',
+  NOTIFICATIONS: '/notifications',
 } as const;
 
 // API path constants
@@ -44,6 +45,9 @@ export const API_PATHS = {
 
   // Audit Log
   ADMIN_AUDIT_LOG: '/admin/audit-log',
+
+  // Notifications
+  ADMIN_NOTIFICATIONS_SEND: '/admin/notifications/send',
 } as const;
 
 // Pagination defaults

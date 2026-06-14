@@ -54,6 +54,7 @@
     "historicalPlaces": "Historical Places",
     "admins": "Administrators",
     "auditLog": "Audit Log",
+    "notifications": "Notifications",
     "settings": "Settings"
   },
   "header": {
@@ -184,6 +185,18 @@
     "tabUz": "UZ",
     "tabRu": "RU",
     "tabEn": "EN"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Send push notifications to users",
+    "pushTitle": "Title",
+    "pushTitlePlaceholder": "Enter notification title",
+    "pushBody": "Message",
+    "pushBodyPlaceholder": "Enter notification message",
+    "send": "Send",
+    "sending": "Sending...",
+    "sent": "Notification sent",
+    "error": "Failed to send"
   },
   "validation": {
     "required": "Required field",

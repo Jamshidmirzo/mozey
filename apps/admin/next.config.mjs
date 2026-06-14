@@ -4,6 +4,14 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/api/v1/:path*',
+        destination: 'http://157.230.225.147:3000/api/v1/:path*',
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

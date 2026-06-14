@@ -54,6 +54,7 @@
     "historicalPlaces": "Исторические места",
     "admins": "Администраторы",
     "auditLog": "Журнал действий",
+    "notifications": "Уведомления",
     "settings": "Настройки"
   },
   "header": {
@@ -184,6 +185,18 @@
     "tabUz": "UZ",
     "tabRu": "RU",
     "tabEn": "EN"
+  },
+  "notifications": {
+    "title": "Уведомления",
+    "subtitle": "Отправка push-уведомлений пользователям",
+    "pushTitle": "Заголовок",
+    "pushTitlePlaceholder": "Введите заголовок уведомления",
+    "pushBody": "Текст",
+    "pushBodyPlaceholder": "Введите текст уведомления",
+    "send": "Отправить",
+    "sending": "Отправка...",
+    "sent": "Уведомление отправлено",
+    "error": "Ошибка при отправке"
   },
   "validation": {
     "required": "Обязательное поле",

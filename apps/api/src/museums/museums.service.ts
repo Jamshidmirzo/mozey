@@ -364,4 +364,52 @@ export class MuseumsService {
     this.logger.log(`Photo deleted: ${photoId}`);
     return { id: photoId, deleted: true };
   }
+
+  /**
+   * Admin: bulk import photos for a museum.
+   * Deletes all existing photos first, then creates new ones.
+   * Used by the migration script to seed photos from Flutter assets.
+   */
+  async bulkImportPhotos(
+    museumId: string,
+    photos: Array<{ url: string; orderIdx: number }>,
+  ) {
+    const museum = await this.prisma.museum.findFirst({
+      where: { id: museumId, deletedAt: null },
+    });
+
+    if (!museum) {
+      throw new NotFoundException('Museum not found');
+    }
+
+    // Delete existing photos for this museum
+    const deleted = await this.prisma.museumPhoto.deleteMany({
+      where: { museumId },
+    });
+
+    // Create new photos in bulk
+    const created = await this.prisma.museumPhoto.createMany({
+      data: photos.map((p) => ({
+        museumId,
+        url: p.url,
+        orderIdx: p.orderIdx,
+      })),
+    });
+
+    // Touch the museum so delta sync picks it up
+    await this.prisma.museum.update({
+      where: { id: museumId },
+      data: { updatedAt: new Date() },
+    });
+
+    this.logger.log(
+      `Bulk photo import for museum ${museumId}: deleted ${deleted.count}, created ${created.count}`,
+    );
+
+    return {
+      museumId,
+      deletedCount: deleted.count,
+      createdCount: created.count,
+    };
+  }
 }

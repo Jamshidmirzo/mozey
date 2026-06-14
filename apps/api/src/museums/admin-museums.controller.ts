@@ -149,6 +149,38 @@ export class AdminMuseumsController {
 
     return photo;
   }
+
+  @Post(':id/photos/bulk')
+  @Roles('superadmin', 'editor')
+  @ApiOperation({
+    summary: 'Bulk import photos for a museum',
+    description:
+      'Replaces all existing photos with the provided list. ' +
+      'Used by migration scripts to seed photos from Flutter assets.',
+  })
+  @ApiResponse({ status: 201, description: 'Photos imported' })
+  @ApiResponse({ status: 404, description: 'Museum not found' })
+  async bulkImportPhotos(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() body: { photos: Array<{ url: string; orderIdx: number }> },
+    @CurrentUser() admin: { id: string },
+  ) {
+    const result = await this.museumsService.bulkImportPhotos(id, body.photos);
+
+    await this.auditLogService.log({
+      adminId: admin.id,
+      action: 'bulk_import_photos',
+      entityType: 'museum',
+      entityId: id,
+      diff: {
+        deletedCount: result.deletedCount,
+        createdCount: result.createdCount,
+        urls: body.photos.map((p) => p.url),
+      },
+    });
+
+    return result;
+  }
 }
 
 /**

@@ -1,21 +1,17 @@
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Newsreader } from 'next/font/google';
 import type { Metadata } from 'next';
 import { locales, type Locale } from '@/i18n/request';
 import { SITE_URL } from '@/lib/constants';
 
-const inter = Inter({
-  subsets: ['latin', 'cyrillic'],
-  variable: '--font-inter',
+const newsreader = Newsreader({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-newsreader',
   display: 'swap',
-});
-
-const playfair = Playfair_Display({
-  subsets: ['latin', 'cyrillic'],
-  variable: '--font-playfair',
-  display: 'swap',
+  style: ['normal', 'italic'],
+  weight: ['300', '400', '500', '600'],
 });
 
 export function generateStaticParams() {
@@ -85,7 +81,7 @@ export default async function LocaleLayout({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'Mozey',
+    name: "O'zbekiston Muzeylari",
     applicationCategory: 'TravelApplication',
     operatingSystem: 'iOS, Android',
     offers: {
@@ -99,7 +95,7 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={langMap[locale] || 'uz'} className={`${inter.variable} ${playfair.variable}`}>
+    <html lang={langMap[locale] || 'uz'} className={newsreader.variable}>
       <head>
         <link rel="icon" href="/logo.svg" type="image/svg+xml" />
         <script
@@ -107,7 +103,7 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-white font-sans antialiased">
+      <body className="min-h-screen bg-canvas antialiased">
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

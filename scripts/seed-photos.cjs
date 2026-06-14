@@ -37,7 +37,7 @@ const { PrismaClient } = require(
 );
 const prisma = new PrismaClient();
 
-const BASE_URL = process.env.PHOTOS_BASE_URL || 'http://localhost:3333/static';
+const BASE_URL = process.env.PHOTOS_BASE_URL || '/static';
 
 // Paths
 const APP_IMAGE_PATH = path.resolve(

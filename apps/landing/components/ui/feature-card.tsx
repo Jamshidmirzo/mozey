@@ -1,57 +1,103 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { Bookmark, Star, ArrowUpRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Photo } from './photo';
+import { Overline } from './overline';
+import type { MuseumItem } from '@/lib/constants';
 
 interface FeatureCardProps {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  iconBg: string;
-  iconColor: string;
+  item: MuseumItem;
+  saved: boolean;
+  onOpen: (id: string) => void;
+  onSave: (id: string) => void;
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+export function FeatureCard({ item, saved, onOpen, onSave }: FeatureCardProps) {
+  const t = useTranslations('catalog');
 
-export function FeatureCard({
-  title,
-  description,
-  icon,
-  iconBg,
-  iconColor,
-}: FeatureCardProps) {
   return (
-    <motion.div
-      className="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-6 transition-all duration-300 hover:border-museum-gold/20 hover:shadow-lg hover:shadow-museum-gold/5 sm:p-8"
-      variants={cardVariants}
-      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+    <div
+      role="button"
+      onClick={() => onOpen(item.id)}
+      className="cursor-pointer overflow-hidden relative"
+      style={{
+        borderRadius: 26,
+        boxShadow: '0 18px 44px rgba(30,24,19,0.18)',
+      }}
     >
-      {/* Top accent line on hover */}
-      <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gold-gradient transition-transform duration-300 group-hover:scale-x-100" />
-
-      {/* Icon */}
-      <div
-        className={cn(
-          'flex h-14 w-14 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-110',
-          iconBg,
-          iconColor
-        )}
+      <Photo
+        region={item.region}
+        regionSlug={item.regionSlug}
+        photoUrl={item.photoUrl}
+        radius={26}
+        scrim
+        label={false}
+        style={{ height: 380, minHeight: 380 }}
       >
-        {icon}
-      </div>
+        {/* Recommended badge */}
+        <div className="absolute top-[18px] left-[18px] z-[3]">
+          <span
+            className="inline-flex items-center gap-[7px] rounded-full font-mono text-[11px] tracking-[1.6px] uppercase text-white font-semibold"
+            style={{
+              padding: '7px 13px',
+              background: 'rgba(255,255,255,0.16)',
+              backdropFilter: 'blur(10px)',
+              WebkitBackdropFilter: 'blur(10px)',
+            }}
+          >
+            <Star size={12} fill="#F0C868" color="#F0C868" strokeWidth={0} />
+            {t('recommended')}
+          </span>
+        </div>
 
-      {/* Content */}
-      <h3 className="mt-5 text-lg font-semibold text-deep-blue">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-gray-500">
-        {description}
-      </p>
-    </motion.div>
+        {/* Save button */}
+        <div
+          className="absolute top-4 right-4 z-[3]"
+          onClick={(e) => {
+            e.stopPropagation();
+            onSave(item.id);
+          }}
+        >
+          <button
+            className="w-11 h-11 rounded-full border-none cursor-pointer flex items-center justify-center"
+            style={{
+              background: 'rgba(255,255,255,0.2)',
+              backdropFilter: 'blur(14px) saturate(160%)',
+              WebkitBackdropFilter: 'blur(14px) saturate(160%)',
+              boxShadow:
+                'inset 0 0 0 0.5px rgba(255,255,255,0.4), 0 4px 14px rgba(0,0,0,0.16)',
+            }}
+          >
+            <Bookmark
+              size={21}
+              color="#fff"
+              strokeWidth={2}
+              fill={saved ? '#fff' : 'none'}
+            />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="absolute left-[26px] right-[26px] bottom-[26px] z-[3] max-w-[620px]">
+          <Overline color="rgba(255,255,255,0.85)">
+            {item.region} {item.tag && <>· {item.tag}</>}
+          </Overline>
+          <div
+            className="font-serif text-[42px] font-medium leading-[1.0] text-white -tracking-[0.6px] mt-[9px]"
+            style={{ textShadow: '0 2px 16px rgba(0,0,0,0.3)' }}
+          >
+            {item.name}
+          </div>
+          <div className="font-ui text-[16px] leading-[1.5] text-white/90 mt-[11px]">
+            {item.short}
+          </div>
+          <div className="inline-flex items-center gap-2 mt-[18px] font-ui text-[15px] font-semibold text-white">
+            {t('openCard')}{' '}
+            <ArrowUpRight size={16} color="#fff" strokeWidth={2.2} />
+          </div>
+        </div>
+      </Photo>
+    </div>
   );
 }

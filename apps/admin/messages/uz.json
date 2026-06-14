@@ -54,6 +54,7 @@
     "historicalPlaces": "Tarixiy joylar",
     "admins": "Administratorlar",
     "auditLog": "Amallar jurnali",
+    "notifications": "Bildirishnomalar",
     "settings": "Sozlamalar"
   },
   "header": {
@@ -184,6 +185,18 @@
     "tabUz": "UZ",
     "tabRu": "RU",
     "tabEn": "EN"
+  },
+  "notifications": {
+    "title": "Bildirishnomalar",
+    "subtitle": "Foydalanuvchilarga push-bildirishnoma yuborish",
+    "pushTitle": "Sarlavha",
+    "pushTitlePlaceholder": "Bildirishnoma sarlavhasini kiriting",
+    "pushBody": "Xabar",
+    "pushBodyPlaceholder": "Bildirishnoma matnini kiriting",
+    "send": "Yuborish",
+    "sending": "Yuborilmoqda...",
+    "sent": "Bildirishnoma yuborildi",
+    "error": "Yuborishda xatolik"
   },
   "validation": {
     "required": "Majburiy maydon",

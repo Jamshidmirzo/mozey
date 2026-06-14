@@ -7,6 +7,10 @@
   "scripts": {
     "import": "node import-data.js",
     "upload-photos": "node upload-photos.js",
-    "upload-photos:dry": "DRY_RUN=true node upload-photos.js"
+    "upload-photos:dry": "DRY_RUN=true node upload-photos.js",
+    "migrate-photos": "node migrate-photos.js",
+    "migrate-photos:dry": "DRY_RUN=true node migrate-photos.js",
+    "migrate-photos:skip-existing": "SKIP_EXISTING=true node migrate-photos.js",
+    "seed-photos": "node seed-photos.cjs"
   }
 }

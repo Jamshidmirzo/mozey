@@ -334,4 +334,52 @@ export class HistoricalPlacesService {
     this.logger.log(`Photo deleted: ${photoId}`);
     return { id: photoId, deleted: true };
   }
+
+  /**
+   * Admin: bulk import photos for a historical place.
+   * Deletes all existing photos first, then creates new ones.
+   * Used by the migration script to seed photos from Flutter assets.
+   */
+  async bulkImportPhotos(
+    placeId: string,
+    photos: Array<{ url: string; orderIdx: number }>,
+  ) {
+    const place = await this.prisma.historicalPlace.findFirst({
+      where: { id: placeId, deletedAt: null },
+    });
+
+    if (!place) {
+      throw new NotFoundException('Historical place not found');
+    }
+
+    // Delete existing photos for this place
+    const deleted = await this.prisma.historicalPlacePhoto.deleteMany({
+      where: { historicalPlaceId: placeId },
+    });
+
+    // Create new photos in bulk
+    const created = await this.prisma.historicalPlacePhoto.createMany({
+      data: photos.map((p) => ({
+        historicalPlaceId: placeId,
+        url: p.url,
+        orderIdx: p.orderIdx,
+      })),
+    });
+
+    // Touch the place so delta sync picks it up
+    await this.prisma.historicalPlace.update({
+      where: { id: placeId },
+      data: { updatedAt: new Date() },
+    });
+
+    this.logger.log(
+      `Bulk photo import for historical place ${placeId}: deleted ${deleted.count}, created ${created.count}`,
+    );
+
+    return {
+      placeId,
+      deletedCount: deleted.count,
+      createdCount: created.count,
+    };
+  }
 }

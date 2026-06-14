@@ -1,107 +1,80 @@
 'use client';
 
+import { WifiOff } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
-import { StoreBadge } from '@/components/ui/store-badge';
-import { APP_STORE_URL, GOOGLE_PLAY_URL } from '@/lib/constants';
-import { AntigravityField } from '@/components/effects/antigravity-field';
+import { StoreButtons } from '@/components/ui/store-buttons';
+import { PhonePreview } from '@/components/ui/phone-preview';
 
 export function Hero() {
   const t = useTranslations('hero');
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end start'],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '40%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
 
   return (
     <section
-      ref={ref}
-      className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden bg-deep-blue"
+      id="top"
+      className="mx-auto max-w-[1200px]"
+      style={{ padding: '150px clamp(20px, 4vw, 40px) 70px' }}
     >
-      <AntigravityField
-        className="absolute inset-0 z-0"
-        particleCount={70}
-        colorScheme="dark"
-      />
-
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-deep-blue/80" />
-
-      <motion.div
-        className="container-landing relative z-10 py-32 text-center"
-        style={{ y, opacity, scale }}
+      <div
+        className="hero-grid grid items-center"
+        style={{
+          gridTemplateColumns: '1.15fr 0.85fr',
+          gap: 'clamp(32px, 5vw, 72px)',
+        }}
       >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <span className="inline-flex items-center gap-2 rounded-full border border-museum-gold/30 bg-museum-gold/10 px-5 py-2 text-sm font-medium text-museum-gold backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-museum-gold opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-museum-gold" />
-            </span>
-            {t('badge')}
-          </span>
-        </motion.div>
-
-        <motion.h1
-          className="mx-auto mt-8 max-w-5xl font-display text-5xl font-bold leading-[0.95] tracking-tight text-white sm:text-7xl md:text-8xl lg:text-9xl"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {t('title')}
-        </motion.h1>
-
-        <motion.p
-          className="mx-auto mt-4 font-display text-2xl text-museum-gold sm:text-3xl md:text-4xl"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {t('subtitle')}
-        </motion.p>
-
-        <motion.p
-          className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-gray-400 sm:text-xl"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-        >
-          {t('description')}
-        </motion.p>
-
-        <motion.div
-          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
-        >
-          <StoreBadge store="apple" href={APP_STORE_URL} />
-          <StoreBadge store="google" href={GOOGLE_PLAY_URL} />
-        </motion.div>
-
-        <motion.div
-          className="mt-16 flex justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.4 }}
-        >
-          <motion.div
-            className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-white/20 p-1.5"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+        {/* Left column */}
+        <div>
+          {/* Badge */}
+          <div
+            className="inline-flex items-center gap-[9px] rounded-full mb-[26px]"
+            style={{ padding: '8px 14px', background: 'rgba(21,94,122,0.08)' }}
           >
-            <motion.div className="h-2 w-1 rounded-full bg-museum-gold" />
-          </motion.div>
-        </motion.div>
-      </motion.div>
+            <span
+              className="w-1.5 h-1.5 rounded-full bg-primary"
+              style={{ boxShadow: '0 0 0 3px rgba(21,94,122,0.14)' }}
+            />
+            <span className="font-mono text-xs font-semibold tracking-[1.4px] text-primary uppercase">
+              {t('badge')}
+            </span>
+          </div>
+
+          {/* Headline */}
+          <h1
+            className="font-serif font-medium text-ink m-0"
+            style={{
+              fontSize: 'clamp(40px, 6vw, 66px)',
+              lineHeight: 1.02,
+              letterSpacing: -1.2,
+            }}
+          >
+            {t('titleLine1')}
+            <br />
+            {t('titleLine2')}
+            <br />
+            <span className="italic text-primary">{t('titleLine3')}</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="font-ui text-[19px] leading-[1.6] text-ink2 max-w-[520px] mt-6">
+            {t('subtitle')}
+          </p>
+
+          {/* Store buttons */}
+          <div className="mt-8">
+            <StoreButtons />
+          </div>
+
+          {/* Offline badge */}
+          <div className="flex items-center gap-[9px] mt-[22px] font-ui text-[14.5px] text-ink3">
+            <WifiOff size={17} color="#9C6F22" strokeWidth={1.9} />
+            {t('offlineBadge')}
+          </div>
+        </div>
+
+        {/* Right column - Phone */}
+        <div className="flex justify-center">
+          <PhonePreview />
+        </div>
+      </div>
     </section>
   );
 }

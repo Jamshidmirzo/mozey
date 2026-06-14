@@ -10,70 +10,58 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        canvas: '#F1EBDF',
+        surface: '#FFFFFF',
+        'surface-alt': '#FAF6EE',
+        sand: '#E7E1D5',
+        ink: '#1E1813',
+        ink2: '#736A5C',
+        ink3: '#A99F8E',
+        primary: '#155E7A',
+        'primary-ink': '#FFFFFF',
+        gold: '#9C6F22',
+        heart: '#B0452E',
+        // region colors
+        'r-samarkand': '#0E4D66',
+        'r-samarkand-light': '#3E9DBC',
+        'r-bukhara': '#0F5E58',
+        'r-bukhara-light': '#2FA398',
+        'r-khiva': '#7A4E1B',
+        'r-khiva-light': '#C79A4E',
+        'r-tashkent': '#2C3A47',
+        'r-tashkent-light': '#6E8398',
+        'r-nukus': '#7A3322',
+        'r-nukus-light': '#C26A4C',
+        // keep old colors for backward compat
         'museum-gold': {
           50: '#FBF6EC',
           100: '#F5E9CC',
           200: '#EDDA9E',
           300: '#E3C76E',
           400: '#D4A853',
-          500: '#C49230',
-          600: '#A57625',
-          700: '#7D591C',
-          800: '#563D14',
-          900: '#33240C',
           DEFAULT: '#D4A853',
         },
         'deep-blue': {
-          50: '#E8ECF2',
-          100: '#C5CDD9',
-          200: '#9AABC0',
-          300: '#6E89A7',
-          400: '#496E93',
-          500: '#2B5380',
-          600: '#1B365D',
-          700: '#152B4B',
-          800: '#0F1F36',
-          900: '#091322',
           DEFAULT: '#1B365D',
-        },
-        'warm-white': {
-          DEFAULT: '#FFF8F0',
-          50: '#FFFDFB',
-          100: '#FFF8F0',
-          200: '#FFF0DE',
-          300: '#FFE5C4',
-        },
-        'terracotta': {
-          DEFAULT: '#C45A3C',
-          light: '#E07A5F',
-          dark: '#9E3A22',
-        },
-        'silk-green': {
-          DEFAULT: '#2D6A4F',
-          light: '#40916C',
-          dark: '#1B4332',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
-      },
-      backgroundImage: {
-        'islamic-pattern': "url('/patterns/islamic-geo.svg')",
-        'hero-gradient':
-          'linear-gradient(135deg, #1B365D 0%, #2B5380 40%, #496E93 100%)',
-        'gold-gradient':
-          'linear-gradient(135deg, #D4A853 0%, #E3C76E 50%, #D4A853 100%)',
-        'warm-gradient':
-          'linear-gradient(180deg, #FFF8F0 0%, #FFFFFF 100%)',
+        serif: ['var(--font-newsreader)', 'Newsreader', 'Georgia', '"Times New Roman"', 'serif'],
+        ui: [
+          '-apple-system',
+          '"SF Pro Text"',
+          'system-ui',
+          '"Segoe UI"',
+          'sans-serif',
+        ],
+        mono: ['ui-monospace', '"SF Mono"', 'Menlo', 'monospace'],
+        sans: ['-apple-system', '"SF Pro Text"', 'system-ui', '"Segoe UI"', 'sans-serif'],
+        display: ['var(--font-newsreader)', 'Newsreader', 'Georgia', 'serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-out forwards',
         'slide-up': 'slideUp 0.6s ease-out forwards',
-        'slide-down': 'slideDown 0.4s ease-out forwards',
-        'scale-in': 'scaleIn 0.5s ease-out forwards',
-        'float': 'float 6s ease-in-out infinite',
-        'shimmer': 'shimmer 2s linear infinite',
+        'sheet-up': 'sheetUp 420ms cubic-bezier(.2,.85,.2,1) forwards',
       },
       keyframes: {
         fadeIn: {
@@ -84,32 +72,10 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translateY(30px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        slideDown: {
-          '0%': { opacity: '0', transform: 'translateY(-10px)' },
+        sheetUp: {
+          '0%': { opacity: '0', transform: 'translateY(40px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        scaleIn: {
-          '0%': { opacity: '0', transform: 'scale(0.95)' },
-          '100%': { opacity: '1', transform: 'scale(1)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
-        shimmer: {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
-        },
-      },
-      borderRadius: {
-        'xl': '1rem',
-        '2xl': '1.5rem',
-        '3xl': '2rem',
-      },
-      spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '128': '32rem',
       },
     },
   },

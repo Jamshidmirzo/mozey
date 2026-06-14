@@ -1,24 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
-
-const inter = Inter({
-  subsets: ['latin', 'cyrillic'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const playfair = Playfair_Display({
-  subsets: ['latin', 'cyrillic'],
-  variable: '--font-playfair',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mozey.uz'),
   title: {
-    default: 'Mozey',
-    template: '%s | Mozey',
+    default: "O'zbekiston Muzeylari",
+    template: "%s | O'zbekiston Muzeylari",
   },
   description:
     "O'zbekiston bo'ylab 281 ta muzey va 101 ta tarixiy joyni kashf eting.",
@@ -26,7 +13,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'uz_UZ',
     alternateLocale: ['ru_RU', 'en_US'],
-    siteName: 'Mozey',
+    siteName: "O'zbekiston Muzeylari",
   },
   twitter: {
     card: 'summary_large_image',
