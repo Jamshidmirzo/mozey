@@ -2,7 +2,7 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://mozey.uz';
 
 export const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE || 'http://157.230.225.147:3000/api/v1';
+  process.env.NEXT_PUBLIC_API_BASE || 'https://api.mozey.uz/api/v1';
 
 export const APP_STORE_URL =
   process.env.NEXT_PUBLIC_APP_STORE_URL ||
