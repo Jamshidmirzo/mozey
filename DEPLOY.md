@@ -4,13 +4,29 @@ This runbook is written to be executed by a single operator (human or agent) wit
 required access. Follow steps in order. Every command is annotated with **where** it runs:
 `[local]`, `[droplet]`, `[GitHub UI]`, `[Vercel UI]`, or `[DNS panel]`.
 
-## Architecture target
+## Current production state (2026-06-18)
+
+The platform is **live on `mozey.uz`** today. It is **not** served from this monorepo.
+
+| Component | Where | URL | Source |
+|---|---|---|---|
+| API | droplet `157.230.225.147`, docker container `mozey-api-1` | `https://api.mozey.uz` | Flat `/opt/mozey/api/` on droplet (manual deploy, not git-tracked) |
+| Admin | same droplet, container `mozey-admin-1` | `https://admin.mozey.uz` | Flat `/opt/mozey/admin/` on droplet |
+| Landing | same droplet, container `mozey-landing-1` | `https://mozey.uz` | Flat `/opt/mozey/landing/` on droplet |
+| Postgres + Redis + MinIO | same droplet, container infra | volumes `mozey_pg_data`, `mozey_redis_data`, `mozey_minio_data` |
+| nginx + Let's Encrypt | droplet host | TLS for all 4 hostnames | `/etc/nginx/sites-enabled/mozey-{api,admin,landing}` |
+
+The workflow `.github/workflows/deploy.yml` and the rest of this runbook describe the
+*intended target* topology (monorepo at `/opt/mozey`, deploy via Actions). They are **not
+yet wired to live prod** — see §11 for the gap.
+
+## Architecture target (when the gap is closed)
 
 | Component | Where | URL |
 |---|---|---|
 | API (NestJS) + Postgres + Redis + MinIO | DigitalOcean droplet `157.230.225.147`, docker-compose | `https://api.mozey.uz` |
 | Admin Panel (Next.js) | Vercel — existing project `prj_uN3T4vUpqagRgOwU2iX9KMDi4arQ` | `https://admin.mozey.uz` |
-| Landing (Next.js) | Vercel — new project to create | `https://mozey.uz` |
+| Landing (Next.js) | Vercel — project `prj_iatZo8BtWdFDHrLh63onVcoNeAIf` | `https://mozey.uz` |
 
 Future deploys are triggered via `Actions → Deploy → Run workflow` (see `.github/workflows/deploy.yml`).
 The workflow assumes PR #1 (`chore/deploy-pipeline-fixes`) is already merged.
@@ -375,3 +391,48 @@ Vercel UI → project → Deployments → previous good deployment → **... →
 - [ ] Add a Grafana / UptimeRobot probe for `https://api.mozey.uz/api/v1/regions` and `https://mozey.uz/`
 - [ ] Schedule cert renewal monitoring: `sudo certbot renew --dry-run` in cron weekly
 - [ ] Rotate `ADMIN_SEED_PASSWORD` — log in once, change it from the admin panel
+
+---
+
+## 11. Known divergence: monorepo vs live prod
+
+The droplet does not run from this monorepo today. Before the workflow can be
+used for real deploys, this gap has to close. Discovered 2026-06-18:
+
+### Layout
+
+- **Monorepo expects** `/opt/mozey/{apps/api, apps/admin, apps/landing}` + `/opt/mozey/infra/docker-compose.yml` + workspace `package.json` at root.
+- **Droplet has** `/opt/mozey/{api, admin, landing}` (flat) + `/opt/mozey/docker-compose.yml` at root + no workspace setup.
+
+### Source
+
+- The droplet's three app directories are **not git repositories** — they were uploaded manually (likely scp/rsync) and have no remote. `git pull` does not work there.
+- The monorepo on `Jamshidmirzo/mozey:main` has the same Prisma schema and the same migrations as the droplet's DB. Both notifications module files and migrations now exist in the monorepo (commit `767a4ea`).
+
+### Dockerfile
+
+- **Droplet `/opt/mozey/api/Dockerfile`**: single-context, `npm install` once, copies `firebase-service-account.json`, CMD runs `npx prisma migrate deploy && node dist/src/main.js` (migrations applied on container start).
+- **Monorepo `infra/Dockerfile.api`**: multi-stage workspace build. **Currently broken** — `COPY --from=deps /app/packages/shared-types/node_modules` fails because `npm ci --workspace=packages/shared-types` does not create that directory when the package's only deps are devDeps that npm hoists. No Firebase service account handling. Migrations expected to run as a separate workflow step.
+
+### Code
+
+- Droplet's API imports `firebase-admin` for push notifications (`FIREBASE_SERVICE_ACCOUNT_PATH` env var is set in prod `.env`).
+- Monorepo's notifications module (added in `767a4ea`) currently has only the controller/service skeleton. The firebase wiring on the droplet has not been audited against monorepo — they may or may not match.
+
+### What to do before flipping the workflow on
+
+1. Audit the diff between monorepo `apps/api/src` and droplet `/opt/mozey/api/src`. Sync any missing prod features into monorepo. Verify the firebase integration is present and identical.
+2. Fix `infra/Dockerfile.api`: remove the broken `COPY .../shared-types/node_modules` line, or restructure so that path actually exists after `npm ci`. Add the Firebase service account copy step.
+3. On the droplet, do a side-by-side cutover, **not** an in-place replacement, so the existing live containers serve traffic until the new ones are verified:
+   - Clone monorepo to `/opt/mozey-mono`
+   - Write `infra/docker-compose.override.yml` that uses `external: true` for network `mozey_default` so new api/admin/landing reach the existing postgres/redis/minio
+   - Map host ports `3010/3110/3210` for new containers; old ones keep `3000/3100/3200`
+   - Build, bring up, smoke-test the new ports
+   - Flip nginx upstreams in `/etc/nginx/sites-enabled/mozey-{api,admin,landing}` from old ports to new
+   - `sudo nginx -t && sudo systemctl reload nginx`
+   - `docker compose -f /opt/mozey/docker-compose.yml stop api admin landing` (keep postgres/redis/minio running)
+   - When stable for a few hours, `mv /opt/mozey /opt/mozey-legacy` and `mv /opt/mozey-mono /opt/mozey` so `DO_DEPLOY_PATH=/opt/mozey` lands on the monorepo.
+
+Until §11 closes, **do not** trigger `gh workflow run deploy.yml -f environment=production -f service=api` — the workflow assumes monorepo layout at `DO_DEPLOY_PATH=/opt/mozey` and would either fail loudly (missing `infra/docker-compose.yml` at that path) or, worse, partially overwrite the working source.
+
+The other two workflow jobs (`deploy-admin`, `deploy-landing`) deploy to Vercel and are safe to run — the Vercel projects are set up, domains attached, and env vars in place. They are currently dormant because DNS points all four hostnames at the droplet, not at Vercel; flipping to Vercel is a DNS change away.
