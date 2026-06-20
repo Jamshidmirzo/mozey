@@ -1,11 +1,10 @@
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || 'https://mozey.uz';
 
-// Dev default points at the local NestJS standalone API on :3333 — the same
-// backend the admin panel writes to, so changes show up immediately.
-// Production must override via NEXT_PUBLIC_API_BASE (e.g. https://api.mozey.uz/api/v1).
+// Default targets production. For local dev override via NEXT_PUBLIC_API_BASE
+// in apps/landing/.env (already set to http://localhost:3333/api/v1 locally).
 export const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:3333/api/v1';
+  process.env.NEXT_PUBLIC_API_BASE || 'https://api.mozey.uz/api/v1';
 
 export const APP_STORE_URL =
   process.env.NEXT_PUBLIC_APP_STORE_URL ||
