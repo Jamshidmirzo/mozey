@@ -9,23 +9,32 @@ import { Stats } from '@/components/sections/stats';
 import { Reviews } from '@/components/sections/reviews';
 import { FAQ } from '@/components/sections/faq';
 import { CTA } from '@/components/sections/cta';
+import { fetchMuseums, fetchStats } from '@/lib/api';
 
-export default function LandingPage({
+export default async function LandingPage({
   params: { locale },
 }: {
   params: { locale: string };
 }) {
   unstable_setRequestLocale(locale);
 
+  // Hero phone-preview is a marketing surface — must never look empty, so
+  // we explicitly opt into the hardcoded fallback here. Catalog/Map/Stats
+  // do NOT use that fallback — they show real DB state.
+  const [previewItems, stats] = await Promise.all([
+    fetchMuseums(locale, { fallbackToHardcoded: true }),
+    fetchStats(),
+  ]);
+
   return (
     <>
       <Header />
       <main>
-        <Hero />
+        <Hero previewItems={previewItems.slice(0, 3)} totalMuseums={stats.museums || undefined} locale={locale} />
         <Features />
         <Catalog />
-        <MapSection />
-        <Stats />
+        <MapSection locale={locale} />
+        <Stats locale={locale} />
         <Reviews />
         <FAQ />
         <CTA />

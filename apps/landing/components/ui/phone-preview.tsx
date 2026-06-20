@@ -3,9 +3,9 @@
 import { Search, Compass, Bookmark, Map, SlidersHorizontal } from 'lucide-react';
 import { Photo } from './photo';
 import { Overline } from './overline';
-import { MUSEUMS } from '@/lib/constants';
+import type { MuseumItem } from '@/lib/constants';
 
-function MiniCard({ item }: { item: typeof MUSEUMS[0] }) {
+function MiniCard({ item }: { item: MuseumItem }) {
   return (
     <div
       className="flex gap-[11px] bg-white"
@@ -45,8 +45,21 @@ function MiniCard({ item }: { item: typeof MUSEUMS[0] }) {
   );
 }
 
-export function PhonePreview() {
-  const featured = MUSEUMS[0];
+interface PhonePreviewProps {
+  /**
+   * Exactly the first three museums to render — index 0 as the featured big card,
+   * 1 and 2 as the mini-cards below. Caller is expected to fetch these on the
+   * server (with `fallbackToHardcoded: true`, since this surface is marketing
+   * and should never look empty).
+   */
+  items: MuseumItem[];
+  totalMuseums?: number;
+}
+
+export function PhonePreview({ items, totalMuseums }: PhonePreviewProps) {
+  const featured = items[0];
+  const mini1 = items[1];
+  const mini2 = items[2];
   const tabItems = [
     { icon: Compass, label: 'Обзор', active: true },
     { icon: Bookmark, label: 'Избранное', active: false },
@@ -93,7 +106,7 @@ export function PhonePreview() {
           <div className="flex items-end justify-between">
             <div>
               <Overline className="!text-[9.5px] !tracking-[1.6px]">
-                O&apos;zbekiston · 281 музей
+                O&apos;zbekiston{totalMuseums ? ` · ${totalMuseums} музе${totalMuseums % 10 === 1 && totalMuseums % 100 !== 11 ? 'й' : 'ев'}` : ''}
               </Overline>
               <div className="font-serif text-[30px] font-medium text-ink -tracking-[0.5px] mt-[5px]">
                 Обзор
@@ -123,23 +136,25 @@ export function PhonePreview() {
           </div>
 
           {/* Featured */}
-          <div className="mt-[14px] overflow-hidden relative" style={{ borderRadius: 18, boxShadow: '0 10px 24px rgba(30,24,19,0.16)' }}>
-            <Photo region={featured.region} radius={18} scrim label={false} style={{ height: 150 }}>
-              <div className="absolute left-[14px] right-[14px] bottom-[13px] z-[3]">
-                <Overline color="rgba(255,255,255,0.85)" className="!text-[9px] !tracking-[1.4px]">
-                  {featured.region} · {featured.tag}
-                </Overline>
-                <div className="font-serif text-[21px] font-medium text-white leading-[1.02] mt-1">
-                  {featured.name}
+          {featured && (
+            <div className="mt-[14px] overflow-hidden relative" style={{ borderRadius: 18, boxShadow: '0 10px 24px rgba(30,24,19,0.16)' }}>
+              <Photo region={featured.region} radius={18} scrim label={false} style={{ height: 150 }}>
+                <div className="absolute left-[14px] right-[14px] bottom-[13px] z-[3]">
+                  <Overline color="rgba(255,255,255,0.85)" className="!text-[9px] !tracking-[1.4px]">
+                    {featured.region} · {featured.tag}
+                  </Overline>
+                  <div className="font-serif text-[21px] font-medium text-white leading-[1.02] mt-1">
+                    {featured.name}
+                  </div>
                 </div>
-              </div>
-            </Photo>
-          </div>
+              </Photo>
+            </div>
+          )}
 
           {/* Mini cards */}
           <div className="flex flex-col gap-[9px] mt-[14px]">
-            <MiniCard item={MUSEUMS[1]} />
-            <MiniCard item={MUSEUMS[2]} />
+            {mini1 && <MiniCard item={mini1} />}
+            {mini2 && <MiniCard item={mini2} />}
           </div>
         </div>
 

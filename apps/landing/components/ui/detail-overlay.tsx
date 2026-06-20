@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ChevronLeft,
   Share2,
@@ -66,9 +66,27 @@ export function DetailOverlay({
 }: DetailOverlayProps) {
   const t = useTranslations('detail');
 
+  const photos =
+    item.photos && item.photos.length > 0
+      ? item.photos
+      : item.photoUrl
+        ? [item.photoUrl]
+        : [];
+  const [activePhoto, setActivePhoto] = useState(0);
+  // Reset to the first photo whenever a new museum is opened.
+  useEffect(() => {
+    setActivePhoto(0);
+  }, [item.id]);
+  const heroPhoto = photos[activePhoto] ?? item.photoUrl;
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
+      if (photos.length > 1) {
+        if (e.key === 'ArrowRight') setActivePhoto((i) => (i + 1) % photos.length);
+        if (e.key === 'ArrowLeft')
+          setActivePhoto((i) => (i - 1 + photos.length) % photos.length);
+      }
     };
     window.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
@@ -76,7 +94,7 @@ export function DetailOverlay({
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
     };
-  }, [onClose]);
+  }, [onClose, photos.length]);
 
   const related = allItems.filter((i) => i.id !== item.id).slice(0, 5);
   const desc = item.long || item.short;
@@ -96,7 +114,7 @@ export function DetailOverlay({
         className="relative w-full max-w-[880px] bg-canvas overflow-y-auto animate-sheet-up"
         style={{ boxShadow: '0 0 80px rgba(0,0,0,0.4)' }}
       >
-        <Photo region={item.region} regionSlug={item.regionSlug} photoUrl={item.photoUrl} radius={0} scrim label={false} style={{ height: 420 }}>
+        <Photo region={item.region} regionSlug={item.regionSlug} photoUrl={heroPhoto} radius={0} scrim label={false} style={{ height: 420 }}>
           <div className="absolute top-[22px] left-[22px] right-[22px] flex justify-between z-[5]">
             <button onClick={onClose} className="glass-btn">
               <ChevronLeft size={22} color="#fff" strokeWidth={2.4} />
@@ -128,10 +146,47 @@ export function DetailOverlay({
           </div>
         </Photo>
 
+        {photos.length > 1 && (
+          <div className="bg-canvas px-[clamp(24px,6vw,56px)] pt-4">
+            <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:thin]">
+              {photos.map((p, idx) => (
+                <button
+                  key={p + idx}
+                  type="button"
+                  onClick={() => setActivePhoto(idx)}
+                  aria-label={`Photo ${idx + 1} of ${photos.length}`}
+                  className="relative shrink-0 overflow-hidden rounded-[10px] transition-opacity"
+                  style={{
+                    width: 96,
+                    height: 72,
+                    outline:
+                      activePhoto === idx
+                        ? '2px solid #155E7A'
+                        : '1px solid rgba(30,24,19,0.10)',
+                    outlineOffset: activePhoto === idx ? -2 : -1,
+                    opacity: activePhoto === idx ? 1 : 0.7,
+                  }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </button>
+              ))}
+            </div>
+            <div className="mt-1 text-[11px] text-ink3">
+              {activePhoto + 1} / {photos.length}
+            </div>
+          </div>
+        )}
+
         <div
-          className="relative -mt-[26px] bg-canvas"
+          className={`relative ${photos.length > 1 ? '' : '-mt-[26px]'} bg-canvas`}
           style={{
-            borderRadius: '30px 30px 0 0',
+            borderRadius: photos.length > 1 ? 0 : '30px 30px 0 0',
             padding: '30px clamp(24px, 6vw, 56px) 56px',
           }}
         >

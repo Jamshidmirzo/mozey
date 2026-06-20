@@ -4,8 +4,15 @@ import { WifiOff } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { StoreButtons } from '@/components/ui/store-buttons';
 import { PhonePreview } from '@/components/ui/phone-preview';
+import type { MuseumItem } from '@/lib/constants';
 
-export function Hero() {
+interface HeroProps {
+  previewItems: MuseumItem[];
+  totalMuseums?: number;
+  locale?: string;
+}
+
+export function Hero({ previewItems, totalMuseums }: HeroProps) {
   const t = useTranslations('hero');
 
   return (
@@ -72,7 +79,7 @@ export function Hero() {
 
         {/* Right column - Phone */}
         <div className="flex justify-center">
-          <PhonePreview />
+          <PhonePreview items={previewItems} totalMuseums={totalMuseums} />
         </div>
       </div>
     </section>

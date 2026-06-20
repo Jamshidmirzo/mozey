@@ -1,16 +1,23 @@
-'use client';
+import { getTranslations } from 'next-intl/server';
+import { fetchStats } from '@/lib/api';
 
-import { useTranslations } from 'next-intl';
+export async function Stats({ locale }: { locale: string }) {
+  const [t, stats] = await Promise.all([
+    getTranslations({ locale, namespace: 'stats' }),
+    fetchStats(),
+  ]);
 
-const statKeys = [
-  { value: '281', key: 'museums' },
-  { value: '101', key: 'places' },
-  { value: '5', key: 'regions' },
-  { value: '3', key: 'languages' },
-] as const;
+  // When the DB is empty (fresh install / dev) we render an em-dash instead
+  // of a stale hardcoded "281" — a marketing number lying about reality is
+  // exactly the bug this section is fixing.
+  const fmt = (n: number) => (n > 0 ? n.toLocaleString('ru-RU') : '—');
 
-export function Stats() {
-  const t = useTranslations('stats');
+  const cells = [
+    { value: fmt(stats.museums), key: 'museums' as const },
+    { value: fmt(stats.places), key: 'places' as const },
+    { value: fmt(stats.regions), key: 'regions' as const },
+    { value: String(stats.languages), key: 'languages' as const },
+  ];
 
   return (
     <section style={{ background: '#1E1813', color: '#F2EADC' }}>
@@ -24,7 +31,7 @@ export function Stats() {
             gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
           }}
         >
-          {statKeys.map((s, i) => (
+          {cells.map((s, i) => (
             <div key={i} className="text-center">
               <div
                 className="font-serif font-medium text-white"
