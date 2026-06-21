@@ -101,7 +101,7 @@ export function DetailOverlay({
   const drop = desc.charAt(0);
 
   return (
-    <div className="fixed inset-0 z-[200] flex justify-center animate-fade-in">
+    <div className="fixed inset-0 z-[200] flex justify-center animate-fade-in" role="dialog" aria-modal="true">
       <div
         onClick={onClose}
         className="absolute inset-0"
@@ -116,14 +116,14 @@ export function DetailOverlay({
       >
         <Photo region={item.region} regionSlug={item.regionSlug} photoUrl={heroPhoto} radius={0} scrim label={false} style={{ height: 420 }}>
           <div className="absolute top-[22px] left-[22px] right-[22px] flex justify-between z-[5]">
-            <button onClick={onClose} className="glass-btn">
+            <button onClick={onClose} className="glass-btn" aria-label="Close">
               <ChevronLeft size={22} color="#fff" strokeWidth={2.4} />
             </button>
             <div className="flex gap-[11px]">
-              <button className="glass-btn">
+              <button className="glass-btn" aria-label="Share">
                 <Share2 size={19} color="#fff" strokeWidth={2} />
               </button>
-              <button onClick={() => onSave(item.id)} className="glass-btn">
+              <button onClick={() => onSave(item.id)} className="glass-btn" aria-label={saved ? 'Remove bookmark' : 'Add bookmark'}>
                 <Bookmark
                   size={20}
                   color="#fff"

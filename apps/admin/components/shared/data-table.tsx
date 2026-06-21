@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import {
   type ColumnDef,
@@ -62,11 +62,19 @@ export function DataTable<TData, TValue>({
   const t = useTranslations('common');
   const [localSearch, setLocalSearch] = useState(searchValue);
 
+  useEffect(() => {
+    setLocalSearch(searchValue);
+  }, [searchValue]);
+
+  const onSearchChangeRef = useRef(onSearchChange);
+  onSearchChangeRef.current = onSearchChange;
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce((value: string) => {
-      onSearchChange?.(value);
+      onSearchChangeRef.current?.(value);
     }, SEARCH_DEBOUNCE_MS),
-    [onSearchChange]
+    []
   );
 
   const handleSearchChange = (value: string) => {

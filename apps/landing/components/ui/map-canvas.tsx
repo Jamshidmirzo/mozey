@@ -77,6 +77,7 @@ export function MapCanvas({
         <button
           key={i}
           onClick={() => onPin?.(i)}
+          aria-label={p.label || `Map pin ${i + 1}`}
           className="absolute border-none bg-transparent p-0"
           style={{
             left: `${p.x}%`,

@@ -8,7 +8,7 @@ export const loginSchema = z.object({
   password: z
     .string()
     .min(1, 'validation.required')
-    .min(6, 'validation.minLength'),
+    .min(8, 'validation.minLength'),
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;

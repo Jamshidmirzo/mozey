@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -35,7 +35,6 @@ interface MuseumFormProps {
 
 export function MuseumForm({ museum }: MuseumFormProps) {
   const t = useTranslations();
-  const locale = useLocale();
   const router = useRouter();
   const isEdit = !!museum;
 

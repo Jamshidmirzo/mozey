@@ -43,7 +43,7 @@ export async function generateMetadata({
       url: `${SITE_URL}/${locale}`,
       images: [
         {
-          url: `${SITE_URL}/og-image.svg`,
+          url: `${SITE_URL}/og-image.png`,
           width: 1200,
           height: 630,
           alt: meta.title,
@@ -53,7 +53,7 @@ export async function generateMetadata({
     twitter: {
       title: meta.title,
       description: meta.description,
-      images: [`${SITE_URL}/og-image.svg`],
+      images: [`${SITE_URL}/og-image.png`],
     },
   };
 }

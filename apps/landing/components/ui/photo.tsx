@@ -9,6 +9,7 @@ interface PhotoProps {
   radius?: number;
   scrim?: boolean;
   label?: boolean;
+  alt?: string;
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
@@ -21,6 +22,7 @@ export function Photo({
   radius = 18,
   scrim = false,
   label = true,
+  alt = '',
   className = '',
   style = {},
   children,
@@ -51,7 +53,7 @@ export function Photo({
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={photoUrl}
-          alt=""
+          alt={alt || region}
           className="absolute inset-0 w-full h-full object-cover"
           loading="lazy"
         />

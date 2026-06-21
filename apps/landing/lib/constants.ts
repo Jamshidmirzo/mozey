@@ -17,25 +17,6 @@ export const GOOGLE_PLAY_URL =
 export const CONTACT_EMAIL =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'info@mozey.uz';
 
-/* ── Theme tokens ─────────────────────────────────────────────── */
-export const T = {
-  canvas: '#F1EBDF',
-  surface: '#FFFFFF',
-  surfaceAlt: '#FAF6EE',
-  sand: '#E7E1D5',
-  ink: '#1E1813',
-  ink2: '#736A5C',
-  ink3: '#A99F8E',
-  line: 'rgba(30,24,19,0.10)',
-  hair: 'rgba(30,24,19,0.06)',
-  primary: '#155E7A',
-  primaryInk: '#FFFFFF',
-  gold: '#9C6F22',
-  heart: '#B0452E',
-  glass: 'rgba(247,243,235,0.72)',
-  glassBorder: 'rgba(30,24,19,0.07)',
-} as const;
-
 export const REGION_COLORS: Record<string, { deep: string; light: string }> = {
   'samarqand': { deep: '#0E4D66', light: '#3E9DBC' },
   'buxoro': { deep: '#0F5E58', light: '#2FA398' },
@@ -52,12 +33,6 @@ export const REGION_COLORS: Record<string, { deep: string; light: string }> = {
   'sirdaryo': { deep: '#2A4858', light: '#5A8EA4' },
   'namangan': { deep: '#4A5A2E', light: '#8AAA5E' },
 };
-
-export const REGIONS = [
-  'Ташкент', 'Самарканд', 'Бухара', 'Хорезм', 'Кашкадарья',
-  'Сурхандарья', 'Фергана', 'Навои', 'Андижан', 'Джизак',
-  'Сырдарья', 'Каракалпакстан', 'Ташкентская обл.',
-];
 
 export const REGION_POS: Record<string, { x: number; y: number }> = {
   'Нукус': { x: 13, y: 30 },
@@ -196,12 +171,5 @@ export const NAV_LINKS = [
   { key: 'map', href: '#map' },
   { key: 'about', href: '#about' },
 ] as const;
-
-export const STATISTICS = {
-  museums: 281,
-  historicalPlaces: 101,
-  languages: 3,
-  regions: 5,
-} as const;
 
 export const STORAGE_KEY = 'muzeylari_web_v1';

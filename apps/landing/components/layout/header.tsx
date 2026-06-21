@@ -4,64 +4,14 @@ import { useState, useEffect, useRef } from 'react';
 import { Globe, Download, Menu, X } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
-import { APP_STORE_URL } from '@/lib/constants';
-
-const NAV_KEYS = [
-  { key: 'museums', href: '#catalog' },
-  { key: 'places', href: '#catalog' },
-  { key: 'map', href: '#map' },
-  { key: 'about', href: '#about' },
-] as const;
+import { APP_STORE_URL, NAV_LINKS } from '@/lib/constants';
+import { Logo } from '@/components/ui/logo';
 
 const LOCALES = [
   { code: 'uz', label: 'UZ' },
   { code: 'ru', label: 'RU' },
   { code: 'en', label: 'EN' },
 ] as const;
-
-function Logo({ size = 26 }: { size?: number }) {
-  return (
-    <a href="#top" className="inline-flex items-center gap-[11px] no-underline">
-      <span
-        className="flex-shrink-0 inline-flex items-center justify-center bg-primary"
-        style={{
-          width: size,
-          height: size,
-          borderRadius: 7,
-          transform: 'rotate(45deg)',
-          boxShadow: 'inset 0 0 0 1.5px rgba(255,255,255,0.25)',
-        }}
-      >
-        <span
-          style={{
-            width: size * 0.34,
-            height: size * 0.34,
-            borderRadius: 3,
-            background: '#9C6F22',
-          }}
-        />
-      </span>
-      <span className="flex flex-col" style={{ lineHeight: 1 }}>
-        <span
-          className="font-serif font-semibold text-ink"
-          style={{ fontSize: size * 0.72, letterSpacing: -0.2 }}
-        >
-          O&apos;zbekiston
-        </span>
-        <span
-          className="font-mono uppercase text-ink3"
-          style={{
-            fontSize: size * 0.34,
-            letterSpacing: 3,
-            marginTop: 2,
-          }}
-        >
-          Muzeylari
-        </span>
-      </span>
-    </a>
-  );
-}
 
 function useLocaleSwitcher() {
   const locale = useLocale();
@@ -103,6 +53,7 @@ function LocaleSwitcher() {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
+        aria-label="Change language"
         className="hidden sm:inline-flex items-center gap-1.5 rounded-full font-mono text-xs font-semibold tracking-[1px] text-ink2 uppercase cursor-pointer bg-transparent"
         style={{
           padding: '7px 12px',
@@ -115,6 +66,7 @@ function LocaleSwitcher() {
 
       {open && (
         <div
+          role="menu"
           className="absolute top-full right-0 mt-2 bg-surface overflow-hidden z-50"
           style={{
             borderRadius: 12,
@@ -208,7 +160,7 @@ export function Header() {
 
         {/* Desktop nav */}
         <nav className="main-nav hidden md:flex items-center gap-[30px]">
-          {NAV_KEYS.map((link) => (
+          {NAV_LINKS.map((link) => (
             <a
               key={link.key}
               href={link.href}
@@ -240,6 +192,7 @@ export function Header() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             className="md:hidden flex items-center justify-center w-10 h-10 rounded-full border-none bg-transparent cursor-pointer text-ink"
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
@@ -257,7 +210,7 @@ export function Header() {
           }}
         >
           <div className="flex flex-col gap-4">
-            {NAV_KEYS.map((link) => (
+            {NAV_LINKS.map((link) => (
               <a
                 key={link.key}
                 href={link.href}

@@ -124,12 +124,6 @@ export interface PaginatedResponse<T> {
   totalPages: number;
 }
 
-export interface ApiError {
-  statusCode: number;
-  message: string;
-  error?: string;
-}
-
 export interface MuseumFormData {
   name: LocalizedField;
   description: LocalizedField;
@@ -141,16 +135,7 @@ export interface MuseumFormData {
   isPublished: boolean;
 }
 
-export interface HistoricalPlaceFormData {
-  name: LocalizedField;
-  description: LocalizedField;
-  ticketPrice: LocalizedField;
-  latitude: number;
-  longitude: number;
-  city: string;
-  regionId?: string | null;
-  isPublished: boolean;
-}
+export type HistoricalPlaceFormData = MuseumFormData;
 
 export interface AdminFormData {
   email: string;

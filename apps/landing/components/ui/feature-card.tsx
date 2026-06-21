@@ -19,7 +19,9 @@ export function FeatureCard({ item, saved, onOpen, onSave }: FeatureCardProps) {
   return (
     <div
       role="button"
+      tabIndex={0}
       onClick={() => onOpen(item.id)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(item.id); } }}
       className="cursor-pointer overflow-hidden relative"
       style={{
         borderRadius: 26,
@@ -60,6 +62,7 @@ export function FeatureCard({ item, saved, onOpen, onSave }: FeatureCardProps) {
           }}
         >
           <button
+            aria-label={saved ? 'Remove bookmark' : 'Add bookmark'}
             className="w-11 h-11 rounded-full border-none cursor-pointer flex items-center justify-center"
             style={{
               background: 'rgba(255,255,255,0.2)',

@@ -19,7 +19,10 @@ export function GridCard({ item, saved, onOpen, onSave }: GridCardProps) {
 
   return (
     <div
+      role="button"
+      tabIndex={0}
       onClick={() => onOpen(item.id)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(item.id); } }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       className="cursor-pointer bg-surface overflow-hidden flex flex-col"
@@ -44,6 +47,7 @@ export function GridCard({ item, saved, onOpen, onSave }: GridCardProps) {
             }}
           >
             <button
+              aria-label={saved ? 'Remove bookmark' : 'Add bookmark'}
               className="w-[38px] h-[38px] rounded-full border-none cursor-pointer flex items-center justify-center"
               style={{
                 background: 'rgba(255,255,255,0.2)',

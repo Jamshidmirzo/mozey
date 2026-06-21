@@ -5,8 +5,21 @@ import { api, uploadToPresignedUrl } from '../api';
 import { API_PATHS } from '../constants';
 import type { PresignedUrlResponse, MuseumPhoto, HistoricalPlacePhoto } from '../types';
 
-export function useUploadMuseumPhoto(museumId: string) {
+type EntityType = 'museum' | 'historical-place';
+
+function getQueryKey(entityType: EntityType): string {
+  return entityType === 'museum' ? 'admin-museums' : 'admin-historical-places';
+}
+
+function getPhotosPath(entityType: EntityType, entityId: string): string {
+  return entityType === 'museum'
+    ? API_PATHS.ADMIN_MUSEUM_PHOTOS(entityId)
+    : API_PATHS.ADMIN_HISTORICAL_PLACE_PHOTOS(entityId);
+}
+
+export function useUploadEntityPhoto(entityType: EntityType, entityId: string) {
   const queryClient = useQueryClient();
+  const queryKey = getQueryKey(entityType);
 
   return useMutation({
     mutationFn: async (file: File) => {
@@ -17,46 +30,27 @@ export function useUploadMuseumPhoto(museumId: string) {
 
       await uploadToPresignedUrl(presigned.uploadUrl, file);
 
-      await api.post(API_PATHS.ADMIN_MUSEUM_PHOTOS(museumId), {
+      await api.post(getPhotosPath(entityType, entityId), {
         url: presigned.fileUrl,
       });
 
       return presigned.fileUrl;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-museums', museumId] });
-      queryClient.invalidateQueries({ queryKey: ['admin-museums'] });
+      queryClient.invalidateQueries({ queryKey: [queryKey, entityId] });
+      queryClient.invalidateQueries({ queryKey: [queryKey] });
     },
   });
 }
 
+/** @deprecated Use useUploadEntityPhoto('museum', id) instead */
+export function useUploadMuseumPhoto(museumId: string) {
+  return useUploadEntityPhoto('museum', museumId);
+}
+
+/** @deprecated Use useUploadEntityPhoto('historical-place', id) instead */
 export function useUploadHistoricalPlacePhoto(placeId: string) {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async (file: File) => {
-      const presigned = await api.post<PresignedUrlResponse>(
-        '/admin/upload/presign',
-        { filename: file.name, contentType: file.type }
-      );
-
-      await uploadToPresignedUrl(presigned.uploadUrl, file);
-
-      await api.post(API_PATHS.ADMIN_HISTORICAL_PLACE_PHOTOS(placeId), {
-        url: presigned.fileUrl,
-      });
-
-      return presigned.fileUrl;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['admin-historical-places', placeId],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['admin-historical-places'],
-      });
-    },
-  });
+  return useUploadEntityPhoto('historical-place', placeId);
 }
 
 export function useDeletePhoto() {
@@ -72,16 +66,13 @@ export function useDeletePhoto() {
   });
 }
 
-export function useReorderPhotos(entityType: 'museum' | 'historical-place', entityId: string) {
+export function useReorderPhotos(entityType: EntityType, entityId: string) {
   const queryClient = useQueryClient();
-  const queryKey = entityType === 'museum' ? 'admin-museums' : 'admin-historical-places';
+  const queryKey = getQueryKey(entityType);
 
   return useMutation({
     mutationFn: (photoIds: string[]) => {
-      const basePath =
-        entityType === 'museum'
-          ? API_PATHS.ADMIN_MUSEUM_PHOTOS(entityId)
-          : API_PATHS.ADMIN_HISTORICAL_PLACE_PHOTOS(entityId);
+      const basePath = getPhotosPath(entityType, entityId);
       return api.patch<(MuseumPhoto | HistoricalPlacePhoto)[]>(
         `${basePath}/reorder`,
         { photoIds }

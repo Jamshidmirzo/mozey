@@ -1,10 +1,5 @@
 import { z } from 'zod';
-
-const localizedFieldSchema = z.object({
-  uz: z.string().min(1, 'validation.required'),
-  ru: z.string().min(1, 'validation.required'),
-  en: z.string().min(1, 'validation.required'),
-});
+import { localizedFieldSchema } from './shared';
 
 export const regionSchema = z.object({
   name: localizedFieldSchema,
